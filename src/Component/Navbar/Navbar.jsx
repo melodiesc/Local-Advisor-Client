@@ -43,11 +43,11 @@ export default function MenuAppBar() {
                     <img className="logoLocal" src="https://svgshare.com/i/10Y9.svg" alt="Logo" />
                     </div>
                     <div className="menu-items">
-                        <li><a onClick={navigateToHome}>Accueil</a></li>
-                        <li><a onClick={navigateToProfil}>Mon Profil</a></li>
-                        <li><a onClick={navigateToCard}>Créer un post</a></li>
-                        <li><a onClick={navigateToLogin}>Connexion</a></li>
-                        <li><a onClick={navigateToRegister}>Inscription</a></li>
+                        <li><a className="navLink" onClick={navigateToHome}>Accueil</a></li>
+                        <li><a className="navLink" onClick={navigateToProfil}>Mon Profil</a></li>
+                        <li><a className="navLink" onClick={navigateToCard}>Créer un post</a></li>
+                        <li><a className="navLink" onClick={navigateToLogin}>Connexion</a></li>
+                        <li><a className="navLink" onClick={navigateToRegister}>Inscription</a></li>
                     </div>
                 </div>
             </div>

@@ -2,11 +2,10 @@
   height: 4vh;
   width: 4vh;
   background-color: transparent;
-  position: absolute;
-  right: 32.5%;
+  position: relative;
+  right: 3.5%;
   border: none;
-  top: 17.7%;
-  transform: translateY(-50%);
+  
 }
 
 .loupe{

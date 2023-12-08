@@ -1,0 +1,23 @@
+/* PostedCard.css */
+
+.fiche {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between; /* Ajustez selon vos besoins */
+}
+
+.imageFiche {
+  width: 100%; /* Ajustez la largeur de l'image selon vos besoins */
+  height: auto;
+  margin-bottom: 10px; /* Ajustez selon vos besoins */
+}
+
+.titre {
+  font-size: 16px; /* Ajustez selon vos besoins */
+  margin-bottom: 5px; /* Ajustez selon vos besoins */
+}
+
+.note {
+  font-size: 14px; /* Ajustez selon vos besoins */
+  color: #888; /* Ajustez selon vos besoins */
+}

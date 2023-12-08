@@ -1,14 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { useState } from "react";
+// import Register from "./components/Register/Register";
+import Login from "./components/Login/Login";
+import reactLogo from "./assets/react.svg";
+import viteLogo from "/vite.svg";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  // const [count, setCount] = useState(0);
+  const router = createBrowserRouter([
+    // {
+    //   path: "/",
+    //   element: <Register />,
+    // },
+    {
+      path: "/",
+      element: <Login />,
+    },
+  ]);
   return (
     <>
       <div>
+        <RouterProvider router={router} />
+      </div>
+      {/* <div>
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -27,9 +42,9 @@ function App() {
       </div>
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
-      </p>
+      </p> */}
     </>
-  )
+  );
 }
 
-export default App
+export default App;

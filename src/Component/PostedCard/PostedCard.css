@@ -3,6 +3,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   text-align: center;
+  margin-top: 3em;
   justify-content: space-between;
   width: 20%;
 }
@@ -26,7 +27,7 @@
 .parentFiche {
   display: flex;
   justify-content: center;
-  margin-top: 15em;
+  margin-top: 9em;
   flex-direction: row;
   gap: 1em;
   flex-wrap: wrap;

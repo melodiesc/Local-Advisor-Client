@@ -2,7 +2,7 @@ import "./SearchBar.css";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import { IonIcon } from '@ionic/react';
-import { send, wine, bed, restaurant, search } from 'ionicons/icons';
+import { wine, bed, restaurant, search } from 'ionicons/icons';
 
 export default function SearchBar() {
   const [selectedOption, setSelectedOption] = React.useState(null);

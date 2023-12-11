@@ -1,13 +1,13 @@
 import "./Home.css";
-import "../NavBar/NavBar.css";
-import NavBar from "../NavBar/NavBar";
+import "../NavBarHome/NavBarHome.css";
+import NavBarHome from "../NavBarHome/NavBarHome";
 import PostedCard from "../PostedCard/PostedCard";
 import SearchBar from "../SearchBar/SearchBar";
 
-function Home() {
+export default function Home() {
   return (
     <>
-      <NavBar />
+      <NavBarHome />
       <SearchBar />
       <div className="parent">
       <PostedCard/>
@@ -15,4 +15,4 @@ function Home() {
     </>
   );
 }
-export default Home;
+

@@ -101,7 +101,9 @@ const LocationList = () => {
           {locations && locations.map((location) => (
               <div key={location.id} className="fiche">
                 <img className="imageFiche" src={location.image_path} />
+                <h5><u>{location.category}</u></h5>
                 <p className="titre">{location.name}</p>
+                <p>Propriétaire : {location.owner_lastname} {location.owner_firstname}</p>
               </div>
           ))}
         

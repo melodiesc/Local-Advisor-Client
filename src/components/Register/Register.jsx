@@ -32,19 +32,28 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.fesqfe
-
 const defaultTheme = createTheme();
 
 function Register() {
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    try {
+      const response = await fetch("http://localhost:8000/api/register", {
+        method: "POST",
+        body: data,
+      });
+
+      if (response.ok) {
+        console.log("ça marche");
+      } else {
+        console.error("erreur");
+      }
+    } catch (error) {
+      console.error("erreur", error);
+    }
   };
 
   return (
@@ -75,7 +84,7 @@ function Register() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="firstname"
                   required
                   fullWidth
                   id="firstName"
@@ -89,7 +98,7 @@ function Register() {
                   fullWidth
                   id="lastName"
                   label="Nom"
-                  name="lastName"
+                  name="lastname"
                   autoComplete="family-name"
                 />
               </Grid>

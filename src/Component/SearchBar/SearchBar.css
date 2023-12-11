@@ -5,7 +5,7 @@
   position: absolute;
   right: 32.5%;
   border: none;
-  top: 17.7%;
+  top: 18.5%;
   transform: translateY(-50%);
 }
 
@@ -75,4 +75,8 @@
 display: flex;
 gap: 0.5em;
 align-items: center;
+}
+
+.labelFilter:hover {
+  cursor: pointer;
 }

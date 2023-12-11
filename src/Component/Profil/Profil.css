@@ -1,0 +1,33 @@
+.profileInfo {
+  width: 25em;
+    height: 30em;
+    margin-top: 5.5em;
+    display: flex;
+    border-radius: 10%;
+    flex-direction: column;
+    box-shadow: 25px 25px 20px #8a8a8a;
+    padding: 2em;
+    align-items: center;
+    gap: 0.5em;
+    justify-content: center;
+}
+
+.parentProfil {
+  margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.editprofil-btn {
+  background: transparent;
+  border: none;
+  font-size: 1.2em;
+  margin-top: 1.2em;
+}
+
+.editprofil-btn:hover {
+  cursor: pointer;
+  border-bottom: 1px solid black;
+}

@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 import "./RegisterOwner.css";
 
 function Copyright(props) {
@@ -37,23 +39,28 @@ const defaultTheme = createTheme();
 
 function Register() {
   const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    try {
-      const response = await fetch("http://localhost:8000/api/register_owner", {
-        method: "POST",
-        body: data,
-      });
+    const response = await fetch("http://localhost:8000/api/register_owner", {
+      method: "POST",
+      body: data,
+    });
 
-      if (response.ok) {
-        console.log("ça marche");
-      } else {
-        console.error("erreur");
-      }
-    } catch (error) {
-      console.error("erreur", error);
+    if (!response.ok) {
+      setShowAlert(true);
+      setTimeout(() => {
+        navigateToLogin();
+      }, 1000);
+    } else {
+      console.error("erreur");
     }
   };
 
@@ -115,7 +122,7 @@ function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
-              <span className="labelDate">Date de naissance :</span>
+                <span className="labelDate">Date de naissance :</span>
                 <TextField
                   required
                   fullWidth
@@ -162,6 +169,12 @@ function Register() {
                 </Link>
               </Grid>
             </Grid>
+            {showAlert && (
+              <Alert severity="success">
+                Création de compte réussie, redirection vers la page de
+                connexion
+              </Alert>
+            )}{" "}
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

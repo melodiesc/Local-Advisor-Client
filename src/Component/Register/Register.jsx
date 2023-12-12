@@ -48,9 +48,12 @@ function Register() {
       });
 
       if (response.ok) {
-        console.log("ça marche");
+        const data = await response.json();
+        // Stocker le token dans le LocalStorage
+        localStorage.setItem("token", data.data); // Assurez-vous de stocker le bon champ du token reçu dans la réponse
+        console.log("Utilisateur inscrit avec succès!");
       } else {
-        console.error("erreur");
+        console.error("Erreur lors de l'inscription");
       }
     } catch (error) {
       console.error("erreur", error);
@@ -115,7 +118,7 @@ function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
-              <span className="labelDate">Date de naissance :</span>
+                <span className="labelDate">Date de naissance :</span>
                 <TextField
                   required
                   fullWidth

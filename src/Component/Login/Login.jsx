@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 function Copyright(props) {
   return (
@@ -37,12 +39,46 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function Login() {
-  const handleSubmit = (event) => {
+  const [formData, setFormData] = useState({ email: "", password: "" }); // État pour stocker les données du formulaire
+  const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+
+  const navigateToHome = () => {
+    navigate("/");
+  };
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+    try {
+      const response = await fetch("http://localhost:8000/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData), // Envoyer les données du formulaire sous forme JSON
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Stocker le token retourné dans localStorage ou dans votre gestionnaire de token
+        localStorage.setItem("token", data.token);
+        setShowAlert(true);
+        setTimeout(() => {
+          navigateToHome();
+        }, 1000);
+        // Rediriger vers une autre page ou effectuer d'autres actions après la connexion réussie
+      } else {
+        console.error("Erreur lors de la connexion");
+      }
+    } catch (error) {
+      console.error("Erreur lors de la connexion", error);
+    }
+  };
+
+  const handleInputChange = (event) => {
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
     });
   };
 
@@ -79,6 +115,8 @@ function Login() {
               name="email"
               autoComplete="email"
               autoFocus
+              value={formData.email}
+              onChange={handleInputChange}
             />
             <TextField
               margin="normal"
@@ -89,6 +127,8 @@ function Login() {
               type="password"
               id="password"
               autoComplete="current-password"
+              value={formData.password}
+              onChange={handleInputChange}
             />
             <FormControlLabel
               control={<Checkbox value="remember" color="primary" />}
@@ -102,6 +142,11 @@ function Login() {
             >
               Connexion
             </Button>
+            {showAlert && (
+              <Alert severity="success">
+                Vous êtes connecté, redirection vers l'acceuil
+              </Alert>
+            )}
             <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">

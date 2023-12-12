@@ -3,7 +3,8 @@ import "./App.css";
 import Home from "./Component/Home/Home";
 import Profil from "./Component/Profil/Profil";
 import EditProfil from "./Component/EditProfil/EditProfil";
-import Register from "./Component/Register/Register";3
+import Register from "./Component/Register/Register";
+import RegisterOwner from "./Component/RegisterOwner/RegisterOwner";
 import Login from "./Component/Login/Login";
 
 function App() {
@@ -25,9 +26,17 @@ function App() {
       element: <Login />,
     },
     {
-      path: "/register",
+      path: "/register_user",
       element: <Register />,
     },
+    {
+      path: "/register_owner",
+      element: <RegisterOwner />,
+    },
+    {
+      path: "/register_owner",
+      element: <RegisterOwner />,
+    }
   ]);
   return (
     <div>

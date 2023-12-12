@@ -24,7 +24,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Local Advisor
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -58,7 +58,7 @@ function Login() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -110,7 +110,7 @@ function Login() {
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
-                  {"Tu n'as pas de compte ? Inscris-toi"}
+                  {"Créer un compte"}
                 </Link>
               </Grid>
             </Grid>

@@ -13,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import "./Register.css";
 
 function Copyright(props) {
   return (
@@ -68,7 +69,7 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -114,11 +115,11 @@ function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
+              <span className="labelDate">Date de naissance :</span>
                 <TextField
                   required
                   fullWidth
                   name="birth_date"
-                  label="Date de naissance"
                   type="date"
                   id="birth_date"
                   autoFocus

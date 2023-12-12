@@ -19,9 +19,13 @@ export default function NavBarHome() {
   const navigateToCard = () => {
     navigate("/post");
   };
-  const navigateToRegister = () => {
-    navigate("/register");
+  const navigateToRegisterUser = () => {
+    navigate("/register_user");
   };
+  const navigateToRegisterOwner = () => {
+    navigate("/register_owner");
+  };
+
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -47,7 +51,8 @@ export default function NavBarHome() {
                         <li><a className="navLink" onClick={navigateToProfil}>Mon Profil</a></li>
                         <li><a className="navLink" onClick={navigateToCard}>Créer un post</a></li>
                         <li><a className="navLink" onClick={navigateToLogin}>Connexion</a></li>
-                        <li><a className="navLink" onClick={navigateToRegister}>Inscription</a></li>
+                        <li><a className="navLink" onClick={navigateToRegisterUser}>Inscription membre</a></li>
+                        <li><a className="navLink" onClick={navigateToRegisterOwner}>Inscription gérant</a></li>
                     </div>
                 </div>
             </div>

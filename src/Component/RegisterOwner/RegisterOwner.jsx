@@ -13,7 +13,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
-import "./Register.css";
+import "./RegisterOwner.css";
 
 function Copyright(props) {
   return (
@@ -25,7 +25,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Local Advisor
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -42,7 +42,7 @@ function Register() {
     const data = new FormData(event.currentTarget);
 
     try {
-      const response = await fetch("http://localhost:8000/api/register_user", {
+      const response = await fetch("http://localhost:8000/api/register_owner", {
         method: "POST",
         body: data,
       });
@@ -73,7 +73,7 @@ function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Inscription Membre
+            Inscription Gérant
           </Typography>
           <Box
             component="form"

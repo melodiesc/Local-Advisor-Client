@@ -1,0 +1,83 @@
+.iconeLoupe {
+  height: 4vh;
+  width: 4vh;
+  background-color: transparent;
+  position: absolute;
+  right: 32.5%;
+  border: none;
+  top: 18.5%;
+  transform: translateY(-50%);
+}
+
+.loupe{
+  color: grey;
+}
+
+.iconeLoupe:hover {
+  cursor: pointer;
+}
+
+.searchInput {
+  padding-left: 1em;
+  border-radius: 10px;
+  height: 4vh;
+  width: 35%;
+  color: black;
+  border: none;
+  border-bottom: 1.5px solid grey;
+}
+
+.searchInput:focus {
+  outline: none;
+}
+
+.search-bar {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 5em;
+}
+
+.filter {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 25px;
+  margin-top: 1em;
+}
+
+.filter-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.filter-btn:hover {
+  cursor: pointer;
+}
+
+.icon-filter-search {
+  color: grey;
+}
+
+.filter input[type="radio"] {
+  display: none;
+}
+
+.selected {
+  border-bottom: 1px solid grey;
+}
+
+.formFilter {
+  display: flex;
+  gap: 2em;
+}
+
+.labelFilter {
+display: flex;
+gap: 0.5em;
+align-items: center;
+}
+
+.labelFilter:hover {
+  cursor: pointer;
+}

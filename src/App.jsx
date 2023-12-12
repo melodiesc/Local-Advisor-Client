@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useState } from "react";
-// import Register from "./components/Register/Register";
+import Register from "./components/Register/Register";
 import Login from "./components/Login/Login";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
@@ -9,14 +9,15 @@ import "./App.css";
 function App() {
   // const [count, setCount] = useState(0);
   const router = createBrowserRouter([
-    // {
-    //   path: "/",
-    //   element: <Register />,
-    // },
     {
       path: "/",
-      element: <Login />,
+      element: <Register />,
     },
+
+    // {
+    //   path: "/",
+    //   element: <Login />,
+    // },
   ]);
   return (
     <>

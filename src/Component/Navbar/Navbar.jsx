@@ -42,7 +42,7 @@ export default function NavBar() {
                         <span className="line line3"></span>
                     </div>
                     <div className="logo">
-                    <img className="logoLocal" src="https://svgshare.com/i/10Y9.svg" alt="Logo" />
+                    <img onClick={navigateToHome} className="logoLocal" src="https://svgshare.com/i/10Y9.svg" alt="Logo" />
                     </div>
                     <div className="menu-items">
                         <li><a className="navLink" onClick={navigateToHome}>Accueil</a></li>

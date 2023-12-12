@@ -36,7 +36,7 @@ function App() {
     {
       path: "/register_owner",
       element: <RegisterOwner />,
-    }
+    },
   ]);
   return (
     <div>

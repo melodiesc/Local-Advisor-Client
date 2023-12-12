@@ -3,9 +3,9 @@
   width: 4vh;
   background-color: transparent;
   position: absolute;
-  right: 32.5%;
+  right: 31.5%;
   border: none;
-  top: 18.5%;
+  top: 18%;
   transform: translateY(-50%);
 }
 
@@ -21,7 +21,7 @@
   padding-left: 1em;
   border-radius: 10px;
   height: 4vh;
-  width: 35%;
+  width: 60%;
   color: black;
   border: none;
   border-bottom: 1.5px solid grey;
@@ -80,4 +80,40 @@ align-items: center;
 
 .labelFilter:hover {
   cursor: pointer;
+}
+
+/* Affichage du résultat */
+.fiche {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: center;
+  margin-top: 3em;
+  width: 20%;
+  gap: 15px;  
+}
+
+.imageFiche {
+  width: 100%; 
+  height: 15vh;
+  margin-bottom: 10px;
+}
+
+.titre {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.note {
+  font-size: 14px;
+  color: #888;
+}
+
+.parentFiche {
+  display: flex;
+  justify-content: center;
+  margin-top: 9em;
+  flex-direction: row;
+  gap: 1em;
+  flex-wrap: wrap;
 }

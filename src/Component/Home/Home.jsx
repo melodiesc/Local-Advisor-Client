@@ -8,8 +8,8 @@ export default function Home() {
   return (
     <>
       <NavBarHome />
-      <SearchBar />
       <div className="parent">
+      <SearchBar />
       <PostedCard/>
       </div>
     </>

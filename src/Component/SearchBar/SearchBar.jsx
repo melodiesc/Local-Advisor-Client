@@ -1,13 +1,15 @@
 import "./SearchBar.css";
 import axios from 'axios';
 import * as React from "react";
-import { useNavigate } from "react-router-dom";
 import { IonIcon } from '@ionic/react';
+import { useNavigate } from "react-router-dom";
 import { wine, bed, restaurant, search } from 'ionicons/icons';
 
 export default function SearchBar() {
   const [selectedOption, setSelectedOption] = React.useState(null);
   const [searchText, setSearchText] = React.useState('');
+  const [responseData, setResponseData] = React.useState(null);
+  const navigate = useNavigate(); 
 
   const handleInputChange = (event) => {
     setSearchText(event.target.value);
@@ -20,37 +22,40 @@ export default function SearchBar() {
   const performAction = async () => {
   switch (selectedOption) {
     case 'hotel':
-      console.log('Option Hôtel selected');
+      console.log('Option Hôtel selectionnée');
       try {
         const response = await axios.post('http://localhost:8000/api/1', {
           category_id: 1,
           searchText: searchText,
         });
         console.log(response.data);
+        setResponseData(response.data);
       } catch (error) {
         console.error('Erreur lors de la requête Hôtel', error);
       }
       break;
     case 'bar':
-      console.log('Option Bar selected');
+      console.log('Option Bar selectionnée');
       try {
         const response = await axios.post('http://localhost:8000/api/2', {
           category_id: 2,
           searchText: searchText,
         });
         console.log(response.data);
+        setResponseData(response.data);
       } catch (error) {
         console.error('Erreur lors de la requête Bar', error);
       }
       break;
     case 'restaurant':
-      console.log('Option Restaurant selected');
+      console.log('Option Restaurant selectionnée');
       try {
         const response = await axios.post('http://localhost:8000/api/3', {
           category_id: 3,
           searchText: searchText,
         });
         console.log(response.data);
+        setResponseData(response.data);
       } catch (error) {
         console.error('Erreur lors de la requête Restaurant', error);
       }
@@ -60,6 +65,7 @@ export default function SearchBar() {
       break;
   }
 };
+
 
   const getSearchPlaceholder = () => {
     switch (selectedOption) {
@@ -125,13 +131,23 @@ export default function SearchBar() {
             onChange={handleOptionChange}
           />
 
-          {/* <button className="filter-btn" type="button" onClick={performAction}>
-            <IonIcon className="icon-filter-search" icon={send} />
-          </button>
-         */}
         </form>
-        
       </div>
+      {responseData ? (
+        <div className='parentFiche'>
+       
+        {responseData && responseData.map((result) => (
+            <div key={result.id} className="fiche">
+              <img className="imageFiche" src={result.image_path} />
+              <h5><u>{result.category}</u></h5>
+              <p className="titre">{result.name}</p>
+              <p>Propriétaire : {result.owner_lastname} {result.owner_firstname}</p>
+            </div>
+        ))}
+      
+    </div>
+      ) : ( " " )}
     </div>
   );
+
 }

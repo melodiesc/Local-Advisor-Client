@@ -40,9 +40,15 @@ const defaultTheme = createTheme();
 function Register() {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
+  const [showPseudo, setShowPseudo] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
 
   const navigateToLogin = () => {
     navigate("/login");
+  };
+
+  const navigateToHome = () => {
+    navigate("/");
   };
 
   const handleSubmit = async (event) => {
@@ -54,13 +60,35 @@ function Register() {
       body: data,
     });
 
+    const responseData = await response.json();
+
     if (!response.ok) {
       setShowAlert(true);
       setTimeout(() => {
         navigateToLogin();
       }, 1000);
     } else {
-      console.error("erreur");
+      if (responseData.status === "false") {
+        if (responseData.data.pseudo) {
+          setShowPseudo(true);
+        }
+        if (responseData.data.email) {
+          setShowEmail(true);
+        }
+
+        setTimeout(() => {
+          setShowPseudo(false);
+          setShowEmail(false);
+        }, 3000);
+      } else {
+        setShowPseudo(false);
+        setShowEmail(false);
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          navigateToLogin();
+        }, 1000);
+      }
     }
   };
 
@@ -76,7 +104,10 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}>
+          <Avatar
+            onClick={navigateToHome}
+            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
+          >
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -164,7 +195,7 @@ function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Vous avez déjà un compte ? Connectez-vous
                 </Link>
               </Grid>
@@ -174,6 +205,12 @@ function Register() {
                 Création de compte réussie, redirection vers la page de
                 connexion
               </Alert>
+            )}{" "}
+            {showPseudo && (
+              <Alert severity="warning">Ce pseudo existe déjà !</Alert>
+            )}{" "}
+            {showEmail && (
+              <Alert severity="warning">Cet email existe déjà !</Alert>
             )}{" "}
           </Box>
         </Box>

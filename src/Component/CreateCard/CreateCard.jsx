@@ -12,6 +12,7 @@ import {
   FormControl,
   Grid,
   Input,
+  CardMedia,
 } from "@mui/material";
 
 function CreateCard({ userId }) {
@@ -25,13 +26,21 @@ function CreateCard({ userId }) {
     description: "",
     photo: null,
   });
-
+  const [imagePreview, setImagePreview] = useState(null);
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: files ? files[0] : value,
     }));
+    if (name === "photo" && files) {
+      const file = files[0];
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const handleSubmit = async (event) => {
@@ -168,6 +177,13 @@ function CreateCard({ userId }) {
                 type="file"
                 onChange={handleChange}
               />
+              {imagePreview && (
+                <CardMedia
+                  component="img"
+                  image={imagePreview}
+                  alt="Aperçu de l'image sélectionnée"
+                />
+              )}
             </Grid>
           </Grid>
           <Button

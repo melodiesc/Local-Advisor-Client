@@ -37,6 +37,10 @@ const defaultTheme = createTheme();
 
 function Register() {
   const navigate = useNavigate();
+  const navigateToHome = () => {
+    navigate("/");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -72,7 +76,10 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
+          <Avatar
+            onClick={navigateToHome}
+            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
+          >
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -160,7 +167,7 @@ function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Vous avez déjà un compte ? Connectez-vous
                 </Link>
               </Grid>

@@ -94,7 +94,10 @@ function Login() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
+          <Avatar
+            onClick={navigateToHome}
+            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
+          >
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -154,7 +157,7 @@ function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/" variant="body2">
                   {"Créer un compte"}
                 </Link>
               </Grid>

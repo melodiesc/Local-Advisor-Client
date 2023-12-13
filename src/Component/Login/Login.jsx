@@ -109,9 +109,12 @@ function Login() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Créer un compte"}
-                </Link>
+              <Link href="/register_user" variant="body2" style={{ display: "block" }}>
+                Créer un compte membre
+              </Link>
+              <Link href="/register_owner" variant="body2" style={{ display: "block" }}>
+                Créer un compte gérant
+              </Link>
               </Grid>
             </Grid>
           </Box>

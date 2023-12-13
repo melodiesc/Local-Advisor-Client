@@ -7,7 +7,8 @@ export default function NavBarHome() {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const [auth, setAuth] = React.useState(!!token);
-  // const [isOwner, setIsOwner] = useState(false);
+  const [isOwner, setIsOwner] = useState(false);
+  const userEmail = "";
 
   const navigateToLogin = () => {
     navigate("/login");
@@ -34,24 +35,24 @@ export default function NavBarHome() {
     navigateToHome();
   };
 
-//   useEffect(() => {
+  useEffect(() => {
 
-//     const checkOwnerEmail = async () => {
-//         try {
-//             const response = await axios.post('/api/check-owner-email', {
-//                 email: userEmail,
-//             });
+    const checkOwnerEmail = async () => {
+        try {
+            const response = await axios.post('/api/check-owner-email', {
+                email: userEmail,
+            });
 
-//             setIsOwner(response.data.exists);
-//         } catch (error) {
-//             console.error('Error checking owner email:', error);
-//         }
-//     };
+            setIsOwner(response.data.exists);
+        } catch (error) {
+            console.error('Erreur lors de la vérification de l\'email gérant :', error);
+        }
+    };
 
-//     if (auth) {
-//         checkOwnerEmail();
-//     }
-// }, [auth, userEmail]);
+    if (auth) {
+        checkOwnerEmail();
+    }
+}, [auth, userEmail]);
 
   return (
     <div>
@@ -85,13 +86,13 @@ export default function NavBarHome() {
                       Mon Profil
                     </a>
                   </li>
-                  {/* {auth && isOwner && ( */}
+                  {auth && isOwner && (
                         <li>
                             <a className="navLink" onClick={navigateToCard}>
                                 Créer un post
                             </a>
                         </li>
-                    {/* )} */}
+                    )}
                   <li>
                     <a className="navLink" onClick={handleLogout}>
                       Déconnexion

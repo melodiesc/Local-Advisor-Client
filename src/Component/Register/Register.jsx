@@ -15,6 +15,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
+const navigateToHome = () => {
+  window.location.href = "/";
+};
+
 function Copyright(props) {
   return (
     <Typography
@@ -25,7 +29,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Local Advisor
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -53,8 +57,7 @@ function Register() {
 
       if (response.ok) {
         const data = await response.json();
-        // Stocker le token dans le LocalStorage
-        localStorage.setItem("token", data.data); // Assurez-vous de stocker le bon champ du token reçu dans la réponse
+        localStorage.setItem("token", data.data);
         console.log("Utilisateur inscrit avec succès!");
       } else {
         console.error("Erreur lors de l'inscription");
@@ -76,10 +79,7 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar
-            onClick={navigateToHome}
-            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
-          >
+          <Avatar sx={{ m: 1, bgcolor: "#1976d2", "&:hover": {cursor:"pointer"}}} onClick={navigateToHome}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

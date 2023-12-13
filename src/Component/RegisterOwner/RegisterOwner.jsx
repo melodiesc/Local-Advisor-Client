@@ -17,6 +17,10 @@ import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import "./RegisterOwner.css";
 
+const navigateToHome = () => {
+  window.location.href = "/";
+};
+
 function Copyright(props) {
   return (
     <Typography
@@ -68,6 +72,7 @@ function Register() {
         navigateToLogin();
       }, 1000);
     } else {
+      localStorage.setItem("token", responseData.data); 
       if (responseData.status === "false") {
         if (responseData.data.pseudo) {
           setShowPseudo(true);
@@ -104,10 +109,7 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar
-            onClick={navigateToHome}
-            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
-          >
+          <Avatar sx={{ m: 1, bgcolor: "#1976d2", "&:hover": {cursor:"pointer"}}} onClick={navigateToHome}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

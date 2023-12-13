@@ -16,6 +16,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 
+const navigateToHome = () => {
+  window.location.href = "/";
+};
+
 function Copyright(props) {
   return (
     <Typography
@@ -34,12 +38,10 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 function Login() {
-  const [formData, setFormData] = useState({ email: "", password: "" }); // État pour stocker les données du formulaire
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
 
@@ -55,18 +57,16 @@ function Login() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData), // Envoyer les données du formulaire sous forme JSON
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
-        const data = await response.json();
-        // Stocker le token retourné dans localStorage ou dans votre gestionnaire de token
-        localStorage.setItem("token", data.token);
+        const { token, user } = await response.json();
+        localStorage.setItem("token", token);
         setShowAlert(true);
         setTimeout(() => {
           navigateToHome();
         }, 1000);
-        // Rediriger vers une autre page ou effectuer d'autres actions après la connexion réussie
       } else {
         console.error("Erreur lors de la connexion");
       }
@@ -95,8 +95,8 @@ function Login() {
           }}
         >
           <Avatar
+            sx={{ m: 1, bgcolor: "#1976d2", "&:hover": { cursor: "pointer" } }}
             onClick={navigateToHome}
-            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
           >
             <LockOutlinedIcon />
           </Avatar>

@@ -37,6 +37,10 @@ const defaultTheme = createTheme();
 
 function Register() {
   const navigate = useNavigate();
+  const navigateToHome = () => {
+    navigate("/");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -48,9 +52,12 @@ function Register() {
       });
 
       if (response.ok) {
-        console.log("ça marche");
+        const data = await response.json();
+        // Stocker le token dans le LocalStorage
+        localStorage.setItem("token", data.data); // Assurez-vous de stocker le bon champ du token reçu dans la réponse
+        console.log("Utilisateur inscrit avec succès!");
       } else {
-        console.error("erreur");
+        console.error("Erreur lors de l'inscription");
       }
     } catch (error) {
       console.error("erreur", error);
@@ -69,7 +76,10 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
+          <Avatar
+            onClick={navigateToHome}
+            sx={{ m: 1, bgcolor: "#1976d2", cursor: "pointer" }}
+          >
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -115,7 +125,7 @@ function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
-              <span className="labelDate">Date de naissance :</span>
+                <span className="labelDate">Date de naissance :</span>
                 <TextField
                   required
                   fullWidth
@@ -157,7 +167,7 @@ function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Vous avez déjà un compte ? Connectez-vous
                 </Link>
               </Grid>

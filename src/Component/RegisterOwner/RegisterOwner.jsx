@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -13,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 import "./RegisterOwner.css";
 
 const navigateToHome = () => {
@@ -41,23 +43,56 @@ const defaultTheme = createTheme();
 
 function Register() {
   const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
+  const [showPseudo, setShowPseudo] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
+
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+
+  const navigateToHome = () => {
+    navigate("/");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
 
-    try {
-      const response = await fetch("http://localhost:8000/api/register_owner", {
-        method: "POST",
-        body: data,
-      });
+    const response = await fetch("http://localhost:8000/api/register_owner", {
+      method: "POST",
+      body: data,
+    });
 
-      if (response.ok) {
-        console.log("ça marche");
+    const responseData = await response.json();
+
+    if (!response.ok) {
+      setShowAlert(true);
+      setTimeout(() => {
+        navigateToLogin();
+      }, 1000);
+    } else {
+      if (responseData.status === "false") {
+        if (responseData.data.pseudo) {
+          setShowPseudo(true);
+        }
+        if (responseData.data.email) {
+          setShowEmail(true);
+        }
+
+        setTimeout(() => {
+          setShowPseudo(false);
+          setShowEmail(false);
+        }, 3000);
       } else {
-        console.error("erreur");
+        setShowPseudo(false);
+        setShowEmail(false);
+        setShowAlert(true);
+        setTimeout(() => {
+          setShowAlert(false);
+          navigateToLogin();
+        }, 1000);
       }
-    } catch (error) {
-      console.error("erreur", error);
     }
   };
 
@@ -119,7 +154,7 @@ function Register() {
                 />
               </Grid>
               <Grid item xs={12}>
-              <span className="labelDate">Date de naissance :</span>
+                <span className="labelDate">Date de naissance :</span>
                 <TextField
                   required
                   fullWidth
@@ -166,6 +201,18 @@ function Register() {
                 </Link>
               </Grid>
             </Grid>
+            {showAlert && (
+              <Alert severity="success">
+                Création de compte réussie, redirection vers la page de
+                connexion
+              </Alert>
+            )}{" "}
+            {showPseudo && (
+              <Alert severity="warning">Ce pseudo existe déjà !</Alert>
+            )}{" "}
+            {showEmail && (
+              <Alert severity="warning">Cet email existe déjà !</Alert>
+            )}{" "}
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

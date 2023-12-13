@@ -62,6 +62,9 @@ function Details() {
             sx={{ width: "100%", mb: 2 }}
           />
         )}
+        <Typography variant="body1">
+          Note: {details.rate ? details.rate.name : "Non spécifié"}
+        </Typography>
         {/* <Typography variant="body1">Note: {details.rate.rate}</Typography> */}
 
         <Typography variant="body1" sx={{ mb: 2 }}>

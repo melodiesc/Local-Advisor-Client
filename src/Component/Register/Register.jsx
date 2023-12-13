@@ -15,6 +15,10 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import "./Register.css";
 
+const navigateToHome = () => {
+  window.location.href = "/";
+};
+
 function Copyright(props) {
   return (
     <Typography
@@ -25,7 +29,7 @@ function Copyright(props) {
     >
       {"Copyright © "}
       <Link color="inherit" href="https://mui.com/">
-        Your Website
+        Local Advisor
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -69,7 +73,7 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#1976d2", "&:hover": {cursor:"pointer"}}} onClick={navigateToHome}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -157,7 +161,7 @@ function Register() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/login" variant="body2">
                   Vous avez déjà un compte ? Connectez-vous
                 </Link>
               </Grid>

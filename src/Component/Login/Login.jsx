@@ -14,6 +14,10 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 
+const navigateToHome = () => {
+  window.location.href = "/";
+};
+
 function Copyright(props) {
   return (
     <Typography
@@ -58,7 +62,7 @@ function Login() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2" }}>
+          <Avatar sx={{ m: 1, bgcolor: "#1976d2", "&:hover": {cursor:"pointer"}}} onClick={navigateToHome}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">

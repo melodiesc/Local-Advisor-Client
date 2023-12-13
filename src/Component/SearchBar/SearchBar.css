@@ -111,6 +111,8 @@ align-items: center;
 
 .parentFiche {
   display: flex;
+  padding-bottom: 5em;
+  border-bottom: 1px solid black;
   justify-content: center;
   margin-top: 9em;
   flex-direction: row;

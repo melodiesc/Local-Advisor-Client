@@ -2,72 +2,58 @@ import "./SearchBar.css";
 import axios from 'axios';
 import * as React from "react";
 import { IonIcon } from '@ionic/react';
-import { useNavigate } from "react-router-dom";
-import { wine, bed, restaurant, search } from 'ionicons/icons';
+import { home, wine, bed, restaurant, search } from 'ionicons/icons';
 
 export default function SearchBar() {
-  const [selectedOption, setSelectedOption] = React.useState(null);
-  const [searchText, setSearchText] = React.useState('');
-  const [responseData, setResponseData] = React.useState(null);
-  const navigate = useNavigate(); 
+  let [selectedOption, setSelectedOption] = React.useState('all');
+  let [searchText, setSearchText] = React.useState('');
+  let [responseData, setResponseData] = React.useState(null);
 
-  const handleInputChange = (event) => {
+  let handleInputChange = (event) => {
     setSearchText(event.target.value);
   };
 
-  const handleOptionChange = (event) => {
+  let handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
+  let BASE_URL = 'http://localhost:8000/api/';
 
-  const performAction = async () => {
-  switch (selectedOption) {
-    case 'hotel':
-      console.log('Option Hôtel selectionnée');
-      try {
-        const response = await axios.post('http://localhost:8000/api/1', {
-          category_id: 1,
-          searchText: searchText,
-        });
-        console.log(response.data);
-        setResponseData(response.data);
-      } catch (error) {
-        console.error('Erreur lors de la requête Hôtel', error);
+  let performAction = async () => {
+    if (selectedOption === 'all' && searchText.trim() === '') {
+      setResponseData([]);
+      return;
+    }
+      switch (selectedOption) {
+        case 'all':
+          makeRequest(0);
+          break;
+        case 'hotel':
+          makeRequest(1);
+          break;
+        case 'bar':
+          makeRequest(2);
+          break;
+        case 'restaurant':
+          makeRequest(3);
+          break;
       }
-      break;
-    case 'bar':
-      console.log('Option Bar selectionnée');
-      try {
-        const response = await axios.post('http://localhost:8000/api/2', {
-          category_id: 2,
-          searchText: searchText,
-        });
-        console.log(response.data);
-        setResponseData(response.data);
-      } catch (error) {
-        console.error('Erreur lors de la requête Bar', error);
-      }
-      break;
-    case 'restaurant':
-      console.log('Option Restaurant selectionnée');
-      try {
-        const response = await axios.post('http://localhost:8000/api/3', {
-          category_id: 3,
-          searchText: searchText,
-        });
-        console.log(response.data);
-        setResponseData(response.data);
-      } catch (error) {
-        console.error('Erreur lors de la requête Restaurant', error);
-      }
-      break;
-    default:
-      console.log('Aucune option sélectionnée');
-      break;
-  }
-};
+    }
+  
+  let makeRequest = async (categoryId) => {
+       let url = BASE_URL + (categoryId === 0 ? 'all' : categoryId);
+    try {
+      let response = await axios.post(url, {
+        category_id: categoryId,
+        searchText: searchText,
+      });
+      console.log(response.data);
+      setResponseData(response.data);
+    } catch (error) {
+      console.error(`Erreur lors de la requête ${url}`, error);
+    }
+  };
 
-
-  const getSearchPlaceholder = () => {
+  let getSearchPlaceholder = () => {
     switch (selectedOption) {
       case 'hotel':
         return "Quel hôtel souhaitez-vous trouver?";
@@ -75,7 +61,7 @@ export default function SearchBar() {
         return "Dans quel bar souhaitez-vous vous rendre?";
       case 'restaurant':
         return "Quel restaurant recherchez-vous?";
-      default:
+      case 'all' :
         return "Rechercher...";
     }
   };
@@ -92,6 +78,19 @@ export default function SearchBar() {
       <div className="filter">
 
         <form className="formFilter" action="#" method="post">
+
+        <label htmlFor="all" className={`labelFilter ${selectedOption === 'all' ? 'selected' : ''}`}>
+          <IonIcon className="icon-filter-search" icon={home} />
+          Globale
+        </label>
+        <input
+          type="radio"
+          id="all"
+          name="options"
+          value="all"
+          checked={selectedOption === 'all'}
+          onChange={handleOptionChange}
+        />
 
         <label htmlFor="hotel" className={`labelFilter ${selectedOption === 'hotel' ? 'selected' : ''}`}>
           <IonIcon className="icon-filter-search" icon={bed} />
@@ -134,20 +133,21 @@ export default function SearchBar() {
         </form>
       </div>
       {responseData ? (
-        <div className='parentFiche'>
-       
-        {responseData && responseData.map((result) => (
+      <div className='parentFiche'>
+        {responseData.length > 0 ? (
+          responseData.map((result) => (
             <div key={result.id} className="fiche">
               <img className="imageFiche" src={result.image_path} />
               <h5><u>{result.category}</u></h5>
               <p className="titre">{result.name}</p>
               <p>Propriétaire : {result.owner_lastname} {result.owner_firstname}</p>
             </div>
-        ))}
-      
-    </div>
-      ) : ( " " )}
-    </div>
-  );
-
+          ))
+        ) : (
+          <p>Veuillez saisir une recherche.</p>
+        )}
+      </div>
+    ) : (" ")}
+  </div>
+);
 }

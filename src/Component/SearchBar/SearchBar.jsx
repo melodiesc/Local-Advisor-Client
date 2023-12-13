@@ -19,6 +19,10 @@ export default function SearchBar() {
   let BASE_URL = 'http://localhost:8000/api/';
 
   let performAction = async () => {
+    if (selectedOption === 'all' && searchText.trim() === '') {
+      setResponseData([]);
+      return;
+    }
       switch (selectedOption) {
         case 'all':
           makeRequest(0);
@@ -129,19 +133,21 @@ export default function SearchBar() {
         </form>
       </div>
       {responseData ? (
-        <div className='parentFiche'>
-       
-        {responseData && responseData.map((result) => (
+      <div className='parentFiche'>
+        {responseData.length > 0 ? (
+          responseData.map((result) => (
             <div key={result.id} className="fiche">
               <img className="imageFiche" src={result.image_path} />
               <h5><u>{result.category}</u></h5>
               <p className="titre">{result.name}</p>
               <p>Propriétaire : {result.owner_lastname} {result.owner_firstname}</p>
             </div>
-        ))}
-      
-    </div>
-      ) : ( " " )}
-    </div>
-  );
+          ))
+        ) : (
+          <p>Veuillez saisir une recherche.</p>
+        )}
+      </div>
+    ) : (" ")}
+  </div>
+);
 }

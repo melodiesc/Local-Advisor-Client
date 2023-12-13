@@ -61,9 +61,12 @@ function Login() {
       });
 
       if (response.ok) {
-        const { token, user } = await response.json();
-        localStorage.setItem("token", token);
+        const data = await response.json();
+
+        localStorage.setItem("token", data.token);
+
         setShowAlert(true);
+
         setTimeout(() => {
           navigateToHome();
         }, 1000);

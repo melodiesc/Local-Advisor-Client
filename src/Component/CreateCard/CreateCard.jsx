@@ -14,6 +14,7 @@ import {
   Input,
   CardMedia,
 } from "@mui/material";
+import { navigate } from "ionicons/icons";
 
 function CreateCard({ userId }) {
   const [formData, setFormData] = useState({
@@ -62,6 +63,7 @@ function CreateCard({ userId }) {
 
       if (response.ok) {
         console.log("Lieu créé avec succès");
+        navigate("/");
       } else {
         console.error("Erreur lors de la création du lieu");
       }

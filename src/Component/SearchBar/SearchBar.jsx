@@ -144,7 +144,7 @@ export default function SearchBar() {
             </div>
           ))
         ) : (
-          <p>Veuillez saisir une recherche.</p>
+          <p>Aucun élément ne correspond à votre recherche.</p>
         )}
       </div>
     ) : (" ")}

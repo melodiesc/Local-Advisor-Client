@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "./PostedCard.css";
+import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 const LocationList = () => {
     const [locations, setLocations] = useState([]);
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         const fetchData = async () => {
@@ -19,19 +21,21 @@ const LocationList = () => {
         fetchData();
     }, []);
 
+    const handleLocationClick = (locationId) => {
+        navigate(`/${locationId}`);
+    };
+
     return (
-      <div className='parentFiche'>
-       
-          {locations && locations.map((location) => (
-              <div key={location.id} className="fiche">
-                <img className="imageFiche" src={location.image_path} />
-                <h5><u>{location.category}</u></h5>
-                <p className="titre">{location.name}</p>
-                <p>Propriétaire : {location.owner_lastname} {location.owner_firstname}</p>
-              </div>
-          ))}
-        
-      </div>
+        <div className='parentFiche'>
+            {locations && locations.map((location) => (
+                <div key={location.id} className="fiche" >
+                    <img onClick={() => handleLocationClick(location.id)} className="imageFiche" src={location.image_path} alt={location.name} />
+                    <h5 ><u>{location.category}</u></h5>
+                    <p onClick={() => handleLocationClick(location.id)} className="titre">{location.name}</p>
+                    <p>Propriétaire : {location.owner_lastname} {location.owner_firstname}</p>
+                </div>
+            ))}
+        </div>
     );
 };
 

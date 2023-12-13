@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import {
-  Container,
-  Typography,
-  Box,
-  CardMedia,
-  CircularProgress,
-} from "@mui/material";
+import NavBar from "../NavBar/NavBar";
+import {Container,Typography,Box,CardMedia,CircularProgress,} from "@mui/material";
 
 function Details() {
   const { id } = useParams();
@@ -45,6 +40,8 @@ function Details() {
   }
 
   return (
+    <div>
+    <NavBar />
     <Container component="main" maxWidth="md">
       <Box sx={{ my: 4 }}>
         <Typography variant="body1">
@@ -72,6 +69,7 @@ function Details() {
         </Typography>
       </Box>
     </Container>
+    </div>
   );
 }
 

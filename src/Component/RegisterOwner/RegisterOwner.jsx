@@ -72,6 +72,7 @@ function Register() {
         navigateToLogin();
       }, 1000);
     } else {
+      localStorage.setItem("token", responseData.data); 
       if (responseData.status === "false") {
         if (responseData.data.pseudo) {
           setShowPseudo(true);

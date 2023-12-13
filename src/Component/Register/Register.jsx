@@ -57,8 +57,7 @@ function Register() {
 
       if (response.ok) {
         const data = await response.json();
-        // Stocker le token dans le LocalStorage
-        localStorage.setItem("token", data.data); // Assurez-vous de stocker le bon champ du token reçu dans la réponse
+        localStorage.setItem("token", data.data);
         console.log("Utilisateur inscrit avec succès!");
       } else {
         console.error("Erreur lors de l'inscription");

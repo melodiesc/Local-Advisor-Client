@@ -104,17 +104,25 @@ function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/reset_email" variant="body2">
                   Mot de passe oublié ?
                 </Link>
               </Grid>
               <Grid item>
-              <Link href="/register_user" variant="body2" style={{ display: "block" }}>
-                Créer un compte membre
-              </Link>
-              <Link href="/register_owner" variant="body2" style={{ display: "block" }}>
-                Créer un compte gérant
-              </Link>
+                <Link
+                  href="/register_user"
+                  variant="body2"
+                  style={{ display: "block" }}
+                >
+                  Créer un compte membre
+                </Link>
+                <Link
+                  href="/register_owner"
+                  variant="body2"
+                  style={{ display: "block" }}
+                >
+                  Créer un compte gérant
+                </Link>
               </Grid>
             </Grid>
           </Box>

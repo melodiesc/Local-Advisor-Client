@@ -12,6 +12,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useNavigate } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -36,13 +37,33 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 function EmailPassword() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    const formData = new FormData(event.target);
+    const email = formData.get("email");
+
+    try {
+      const response = await fetch(
+        "http://localhost:8000/api/password/reset-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email }),
+        }
+      );
+
+      if (response.ok) {
+        // Réinitialisation du mot de passe réussie
+        // Afficher un message à l'utilisateur ou rediriger vers une page appropriée
+      } else {
+        // Gérer les erreurs lors de la réinitialisation du mot de passe
+      }
+    } catch (error) {
+      // Gérer les erreurs de requête
+    }
   };
 
   return (
@@ -61,7 +82,10 @@ function EmailPassword() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Mot de passe oublié
+          </Typography>
+          <Typography component="p" variant="p">
+            Vous allez recevoir un email, réinitialisez votre mot de passe
           </Typography>
           <Box
             component="form"
@@ -74,24 +98,10 @@ function EmailPassword() {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label="Adresse Email"
               name="email"
               autoComplete="email"
               autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
             />
             <Button
               type="submit"
@@ -99,17 +109,12 @@ function EmailPassword() {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Sign In
+              Envoyer
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
-                  {"Don't have an account? Sign Up"}
+                <Link href="/" variant="body2">
+                  {"Accueil"}
                 </Link>
               </Grid>
             </Grid>
@@ -120,4 +125,4 @@ function EmailPassword() {
     </ThemeProvider>
   );
 }
-export default EmailPassword();
+export default EmailPassword;

@@ -1,47 +1,82 @@
-import "../NavBar/NavBar.css";
-import "./Profil.css";
-import NavBar from "../NavBar/NavBar";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import NavBar from '../NavBar/NavBar';
+import { useNavigate } from 'react-router-dom';
 
-export default function renderProfil () {
+export default function RenderProfil() {
   const navigate = useNavigate();
+  const [profileData, setProfileData] = useState({
+    firstname: '',
+    lastname: '',
+    birth_date: '',
+    pseudo: '',
+    email: '',
+    password: '',
+  });
 
   const navigateToEditProfil = () => {
-    navigate("/editprofil");
+    navigate('/editprofil');
   };
 
-  return (
-        <div>
-          <NavBar />
-        <div className="parentProfil">
-          
-          <h1>Mon Profil</h1>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const isOwner = JSON.parse(localStorage.getItem('isOwner'));
+        const token = localStorage.getItem('token');
+
+        let endpoint = isOwner ? 'http://localhost:8000/api/owner/profile' : 'http://localhost:8000/api/user/profile';
         
-            <div className="profileInfo" id="profileInfo">
-                
-            <label htmlFor="firstName">Prénom:</label>
-            <span id="firstName">John</span>
+        const response = await fetch(endpoint, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        });
 
-            <label htmlFor="lastName">Nom:</label>
-            <span id="lastName">Doe</span>
+        if (response.ok) {
+          const data = await response.json();
+          setProfileData(data);
+        } else {
+          console.error('Error fetching profile data');
+        }
+      } catch (error) {
+        console.error('Error fetching profile data', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+  
+  
+  return (
+    <div>
+      <NavBar />
+      <div className="parentProfil">
+        <h1>Mon Profil</h1>
+        <div className="profileInfo" id="profileInfo">
+          <label htmlFor="firstName">Prénom:</label>
+          <span id="firstName">{profileData.firstname}</span>
 
-            <label htmlFor="email">E-mail:</label>
-            <span id="email">john.doe@example.com</span>
+          <label htmlFor="lastName">Nom:</label>
+          <span id="lastName">{profileData.lastname}</span>
 
-            <label htmlFor="password">Mot de passe:</label>
-            <span id="password">123456</span>
+          <label htmlFor="username">Pseudo:</label>
+          <span id="username">{profileData.pseudo}</span>
 
-            <label htmlFor="username">Pseudo:</label>
-            <span id="username">john_doe123</span>
+          <label htmlFor="birthdate">Date de naissance:</label>
+          <span id="birthdate">{profileData.birth_date}</span>
 
-            <label htmlFor="birthdate">Date de naissance:</label>
-            <span id="birthdate">01/01/1990</span>
+          <label htmlFor="email">Email:</label>
+          <span id="email">{profileData.email}</span>
 
-                <button className="editprofil-btn" onClick={navigateToEditProfil}>Modifier vos données</button>
-            </div>
-
-          </div>
-          
+          {/* <label htmlFor="password">Mot de passe:</label>
+          <span id="password">{profileData.password}</span> */}
+          <br></br>
+          <button className="editprofil-btn" onClick={navigateToEditProfil}>
+            Modifier vos données
+          </button>
         </div>
-  )
+      </div>
+    </div>
+  );
 }

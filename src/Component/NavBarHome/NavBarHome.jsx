@@ -65,7 +65,7 @@ export default function NavBarHome() {
                       Mon Profil
                     </a>
                   </li>
-                  {auth && isOwner === true && (
+                  {auth && isOwner === "true" && (
                         <li>
                             <a className="navLink" onClick={navigateToCard}>
                                 Créer un post

@@ -16,7 +16,7 @@ export default function SearchBar() {
   let handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-  let BASE_URL = 'http://localhost:8000/api/';
+  let BASE_URL = 'http://localhost:8000/api/categories/';
 
   let performAction = async () => {
     if (selectedOption === 'all' && searchText.trim() === '') {

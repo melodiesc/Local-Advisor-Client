@@ -29,7 +29,6 @@ export default function NavBarHome() {
   const navigateToRegisterOwner = () => {
     navigate("/register_owner");
   };
-
   const handleLogout = () => {
     localStorage.removeItem("token");
     setAuth(false);

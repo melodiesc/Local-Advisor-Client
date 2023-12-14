@@ -15,6 +15,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
+import axios from "axios";
 
 const navigateToHome = () => {
   window.location.href = "/";
@@ -52,29 +53,22 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await fetch("http://localhost:8000/api/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        localStorage.setItem("token", data.token);
-
+      const response = await axios.post('http://localhost:8000/api/login', formData);
+  
+      if (response.status === 200) {
+        const { token, isOwner } = response.data;
+        localStorage.setItem('token', token);
+        localStorage.setItem('isOwner', isOwner);
         setShowAlert(true);
-
+  
         setTimeout(() => {
           navigateToHome();
         }, 1000);
       } else {
-        console.error("Erreur lors de la connexion");
+        console.error('Erreur lors de la connexion');
       }
     } catch (error) {
-      console.error("Erreur lors de la connexion", error);
+      console.error('Erreur lors de la connexion', error);
     }
   };
 

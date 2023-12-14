@@ -12,12 +12,10 @@ const LocationList = () => {
             try {
                 const response = await axios.get('http://localhost:8000/api/locations');
                 setLocations(response.data.locations);
-                console.log(response.data);
             } catch (error) {
                 console.error('Erreur lors de la récupération des données :', error);
             }
         };
-
         fetchData();
     }, []);
 

@@ -18,23 +18,24 @@ export default function renderProfil () {
           <h1>Mon Profil</h1>
         
             <div className="profileInfo" id="profileInfo">
-                <label for="firstName">Prénom:</label>
-                <span id="firstName">John</span>
                 
-                <label for="lastName">Nom:</label>
-                <span id="lastName">Doe</span>
-                
-                <label for="email">E-mail:</label>
-                <span id="email">john.doe@example.com</span>
-                
-                <label for="password">Mot de passe:</label>
-                <span id="password">123456</span>
-                
-                <label for="username">Pseudo:</label>
-                <span id="username">john_doe123</span>
-                
-                <label for="birthdate">Date de naissance:</label>
-                <span id="birthdate">01/01/1990</span>
+            <label htmlFor="firstName">Prénom:</label>
+            <span id="firstName">John</span>
+
+            <label htmlFor="lastName">Nom:</label>
+            <span id="lastName">Doe</span>
+
+            <label htmlFor="email">E-mail:</label>
+            <span id="email">john.doe@example.com</span>
+
+            <label htmlFor="password">Mot de passe:</label>
+            <span id="password">123456</span>
+
+            <label htmlFor="username">Pseudo:</label>
+            <span id="username">john_doe123</span>
+
+            <label htmlFor="birthdate">Date de naissance:</label>
+            <span id="birthdate">01/01/1990</span>
 
                 <button className="editprofil-btn" onClick={navigateToEditProfil}>Modifier vos données</button>
             </div>

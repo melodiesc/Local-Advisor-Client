@@ -8,6 +8,8 @@ import RegisterOwner from "./Component/RegisterOwner/RegisterOwner";
 import Login from "./Component/Login/Login";
 import CreateCard from "./Component/CreateCard/CreateCard";
 import Details from "./Component/Details/Details";
+import Email from "./Component/RecoverPassword/Email";
+import Password from "./Component/RecoverPassword/Password";
 
 function App() {
   const router = createBrowserRouter([
@@ -46,6 +48,14 @@ function App() {
     {
       path: "/:id",
       element: <Details />,
+    },
+    {
+      path: "/reset_email",
+      element: <Email />,
+    },
+    {
+      path: "/reset_password",
+      element: <Password />,
     },
   ]);
   return (

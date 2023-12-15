@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from '../NavBar/NavBar';
 import {
   Box,
   Button,
@@ -76,6 +77,8 @@ function CreateCard({ userId }) {
   };
 
   return (
+    <div>
+    <NavBar />
     <Container component="main" maxWidth="sm">
       <Box
         sx={{
@@ -192,6 +195,7 @@ function CreateCard({ userId }) {
         </Box>
       </Box>
     </Container>
+    </div>
   );
 }
 export default CreateCard;

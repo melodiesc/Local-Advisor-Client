@@ -45,6 +45,7 @@ function Login() {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
 
   const navigateToHome = () => {
     navigate("/");
@@ -53,22 +54,29 @@ function Login() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post('http://localhost:8000/api/login', formData);
-  
+      const response = await axios.post(
+        "http://localhost:8000/api/login",
+        formData
+      );
+
       if (response.status === 200) {
         const { token, isOwner } = response.data;
-        localStorage.setItem('token', token);
-        localStorage.setItem('isOwner', isOwner);
+        localStorage.setItem("token", token);
+        localStorage.setItem("isOwner", isOwner);
         setShowAlert(true);
-  
+
         setTimeout(() => {
           navigateToHome();
         }, 1000);
       } else {
-        console.error('Erreur lors de la connexion');
+        console.error("Erreur lors de la connexion");
       }
     } catch (error) {
-      console.error('Erreur lors de la connexion', error);
+      setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      console.error("Erreur lors de la connexion", error);
     }
   };
 
@@ -144,12 +152,15 @@ function Login() {
             </Button>
             {showAlert && (
               <Alert severity="success">
-                Vous êtes connecté, redirection vers l'acceuil
+                Vous êtes connecté, redirection vers l'accueil
               </Alert>
+            )}
+            {showMessage && (
+              <Alert severity="warning">Veuillez remplir tous les champs</Alert>
             )}
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/reset_email" variant="body2">
                   Mot de passe oublié ?
                 </Link>
               </Grid>

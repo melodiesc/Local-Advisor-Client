@@ -17,8 +17,8 @@ export default function NavBarHome() {
   const navigateToProfil = () => {
     navigate("/profil");
   };
-  const navigateToCard = () => {
-    navigate("/post");
+  const navigateToCreateCard = () => {
+    navigate("/create_card");
   };
   const navigateToRegisterUser = () => {
     navigate("/register_user");
@@ -67,7 +67,7 @@ export default function NavBarHome() {
                   </li>
                   {auth && isOwner === "true" && (
                         <li>
-                            <a className="navLink" onClick={navigateToCard}>
+                            <a className="navLink" onClick={navigateToCreateCard}>
                                 Créer un post
                             </a>
                         </li>

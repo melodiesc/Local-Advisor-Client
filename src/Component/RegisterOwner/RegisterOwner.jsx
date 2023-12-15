@@ -46,18 +46,37 @@ function Register() {
   const [showAlert, setShowAlert] = useState(false);
   const [showPseudo, setShowPseudo] = useState(false);
   const [showEmail, setShowEmail] = useState(false);
-
-  const navigateToLogin = () => {
-    navigate("/login");
-  };
+  const [showMessage, setShowMessage] = useState(false);
 
   const navigateToHome = () => {
     navigate("/");
   };
 
+  const navigateToLogin = () => {
+    navigate("/login");
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
+
+    const isFormValid = () =>
+      [
+        "firstname",
+        "lastname",
+        "pseudo",
+        "birth_date",
+        "email",
+        "password",
+      ].every((input) => data.get(input));
+
+    if (!isFormValid()) {
+      setShowMessage(true);
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 3000);
+      return;
+    }
 
     const response = await fetch("http://localhost:8000/api/register_owner", {
       method: "POST",
@@ -67,12 +86,8 @@ function Register() {
     const responseData = await response.json();
 
     if (!response.ok) {
-      setShowAlert(true);
-      setTimeout(() => {
-        navigateToLogin();
-      }, 1000);
+      console.error(`Erreur`);
     } else {
-      localStorage.setItem("token", responseData.data); 
       if (responseData.status === "false") {
         if (responseData.data.pseudo) {
           setShowPseudo(true);
@@ -109,7 +124,10 @@ function Register() {
             alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: "#1976d2", "&:hover": {cursor:"pointer"}}} onClick={navigateToHome}>
+          <Avatar
+            sx={{ m: 1, bgcolor: "#1976d2", "&:hover": { cursor: "pointer" } }}
+            onClick={navigateToHome}
+          >
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -213,6 +231,11 @@ function Register() {
             )}{" "}
             {showEmail && (
               <Alert severity="warning">Cet email existe déjà !</Alert>
+            )}{" "}
+            {showMessage && (
+              <Alert severity="warning">
+                Veuillez remplir tous les champs !
+              </Alert>
             )}{" "}
           </Box>
         </Box>

@@ -1,0 +1,44 @@
+
+.container {
+    max-width: 768px; 
+  
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .box {
+   
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+  }
+  
+  .typography {
+    margin-bottom: 1vh;
+    text-align: center;
+    padding: 3vh;
+  }
+  
+  .pics {
+       align-self: center;
+    height: 40vh;
+    width: 90%;
+    margin-bottom: 10px;
+    box-shadow: 3px 3px 10px 0px grey;
+    border: 1px solid #808080ad;
+    border-radius: 5px;
+  }
+  .locic{
+    padding-top: 1vh;
+    size: 2vh;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin: 0;
+  }
+
+  

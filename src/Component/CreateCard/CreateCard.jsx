@@ -16,16 +16,19 @@ import {
 } from "@mui/material";
 import { navigate } from "ionicons/icons";
 
+const navigateToHome = () => {
+  window.location.href = "/";
+};
 function CreateCard({ userId }) {
   const [formData, setFormData] = useState({
+    owner_id: "",
     name: "",
-    streetNumber: "",
-    street: "",
-    postalCode: "",
+    address: "",
+    zip_code: "",
     city: "",
-    category: "",
+    category_id: "",
     description: "",
-    photo: null,
+    image_path: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
   const handleChange = (e) => {
@@ -52,8 +55,8 @@ function CreateCard({ userId }) {
       data.append(key, formData[key]);
     });
 
-    // Ajouter le user_id en hidden
-    data.append("user_id", userId);
+    // // Ajouter le user_id en hidden
+    // data.append("user_id", userId);
 
     try {
       const response = await fetch("http://localhost:8000/api/create_card", {
@@ -63,7 +66,7 @@ function CreateCard({ userId }) {
 
       if (response.ok) {
         console.log("Lieu créé avec succès");
-        navigate("/");
+        // navigateToHome();
       } else {
         console.error("Erreur lors de la création du lieu");
       }
@@ -102,10 +105,10 @@ function CreateCard({ userId }) {
               <TextField
                 required
                 fullWidth
-                id="streetNumber"
-                label="Numéro de Rue"
-                name="streetNumber"
-                autoComplete="street-number"
+                id="address"
+                label="Adresse"
+                name="address"
+                autoComplete="address"
                 onChange={handleChange}
               />
             </Grid>
@@ -113,19 +116,8 @@ function CreateCard({ userId }) {
               <TextField
                 required
                 fullWidth
-                id="street"
-                label="Rue"
-                name="street"
-                autoComplete="street"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                fullWidth
-                id="zip_ode"
-                label="Code Postal"
+                id="zip_code"
+                label="Code postal"
                 name="zip_code"
                 autoComplete="zip_code"
                 onChange={handleChange}
@@ -142,7 +134,8 @@ function CreateCard({ userId }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+
+            <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="category-label">Catégorie</InputLabel>
                 <Select

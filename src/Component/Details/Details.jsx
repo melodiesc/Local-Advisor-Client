@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-import {Container,Typography,Box,CardMedia,CircularProgress,} from "@mui/material";
-
+import "./Details.css";
+import FmdGoodIcon from "@mui/icons-material/FmdGood";
+import InfoIcon from "@mui/icons-material/Info";
+import StarIcon from "@mui/icons-material/Star";
 function Details() {
   const { id } = useParams();
   const [details, setDetails] = useState(null);
@@ -32,43 +34,49 @@ function Details() {
   }, [id]);
 
   if (isLoading) {
-    return <CircularProgress />;
+    return <div className="loading">Chargement...</div>; // Remplacé CircularProgress par un div
   }
 
   if (error) {
     return <div>Erreur: {error}</div>;
   }
 
+  if (!details) {
+    return <div>Aucune donnée disponible</div>;
+  }
+
   return (
     <div>
-    <NavBar />
-    <Container component="main" maxWidth="md">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="body1">
-          <h2> {details.category.category}</h2>
-        </Typography>
+      <NavBar />
+      <div className="container">
+        <div className="box">
+          <div className="typography">
+            <h2>{details.category.category}</h2>
+          </div>
 
-        <Typography variant="body1">
-          Adresse: {details.address}, {details.zip_code} {details.city}
-        </Typography>
-        {details.image_path && (
-          <CardMedia
-            component="img"
-            image={details.image_path}
-            alt={`Photo du lieu ${details.name}`}
-            sx={{ width: "100%", mb: 2 }}
-          />
-        )}
-        <Typography variant="body1">
-          Note: {details.rate ? details.rate.name : "Non spécifié"}
-        </Typography>
-        {/* <Typography variant="body1">Note: {details.rate.rate}</Typography> */}
+          {details.image_path && (
+            <img
+              className="pics"
+              src={details.image_path}
+              alt={`Photo du lieu ${details.name}`}
+            />
+          )}
 
-        <Typography variant="body1" sx={{ mb: 2 }}>
-          Description: {details.description}
-        </Typography>
-      </Box>
-    </Container>
+          <div className="typography">
+            <StarIcon className="locic" fontSize="small" />{" "}
+            {details.rate ? details.rate.name : "/5"}
+            <StarIcon className="locic" fontSize="small" />
+          </div>
+          <div className="typography">
+            <FmdGoodIcon className="locic" fontSize="small" /> {details.address}
+            , {details.zip_code} {details.city}
+          </div>
+          <div className="typography">
+            <InfoIcon className="locic" fontSize="small" />{" "}
+            {details.description}
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

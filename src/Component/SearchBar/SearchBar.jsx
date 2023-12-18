@@ -61,13 +61,8 @@ export default function SearchBar() {
         return "Dans quel bar souhaitez-vous vous rendre?";
       case "restaurant":
         return "Quel restaurant recherchez-vous?";
-<<<<<<< HEAD
       case "all":
-        return "Rechercher...";
-=======
-      case 'all' :
         return "Rechercher";
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
     }
   };
 
@@ -105,7 +100,6 @@ export default function SearchBar() {
             onChange={handleOptionChange}
           />
 
-<<<<<<< HEAD
           <label
             htmlFor="hotel"
             className={`labelFilter ${
@@ -123,20 +117,6 @@ export default function SearchBar() {
             checked={selectedOption === "hotel"}
             onChange={handleOptionChange}
           />
-=======
-        <label htmlFor="all" className={`labelFilter ${selectedOption === 'all' ? 'selected' : ''}`}>
-          <IonIcon className="icon-filter-search" icon={home} />
-          Tout rechercher
-        </label>
-        <input
-          type="radio"
-          id="all"
-          name="options"
-          value="all"
-          checked={selectedOption === 'all'}
-          onChange={handleOptionChange}
-        />
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
 
           <label
             htmlFor="bar"

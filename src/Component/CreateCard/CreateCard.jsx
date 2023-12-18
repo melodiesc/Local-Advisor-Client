@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import NavBar from '../NavBar/NavBar';
+import NavBar from "../NavBar/NavBar";
 import {
   Box,
   Button,
@@ -16,16 +16,9 @@ import {
   CardMedia,
 } from "@mui/material";
 
-<<<<<<< HEAD
-const navigateToHome = () => {
-  window.location.href = "/";
-};
-function CreateCard({ userId }) {
-=======
 function CreateCard({}) {
   const navigate = useNavigate();
   const [ownerId, setOwnerId] = useState({ id: "" });
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
   const [formData, setFormData] = useState({
     owner_id: "",
     name: "",
@@ -34,11 +27,7 @@ function CreateCard({}) {
     city: "",
     category_id: "",
     description: "",
-<<<<<<< HEAD
-    image_path: null,
-=======
     image_path: "",
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
   });
   const [imagePreview, setImagePreview] = useState(null);
 
@@ -99,12 +88,6 @@ function CreateCard({}) {
       data.append(key, formData[key]);
     });
 
-<<<<<<< HEAD
-    // // Ajouter le user_id en hidden
-    // data.append("user_id", userId);
-
-=======
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
     try {
       const response = await fetch("http://localhost:8000/api/create_card", {
         method: "POST",
@@ -113,7 +96,7 @@ function CreateCard({}) {
 
       if (response.ok) {
         console.log("Lieu créé avec succès");
-        // navigateToHome();
+        navigate("/");
       } else {
         console.error("Erreur lors de la création du lieu");
       }
@@ -124,155 +107,139 @@ function CreateCard({}) {
 
   return (
     <div>
-    <NavBar />
-    <Container component="main" maxWidth="sm">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Typography component="h1" variant="h5">
-          Créer un Lieu
-        </Typography>
+      <NavBar />
+      <Container component="main" maxWidth="sm">
         <Box
-          component="form"
-          noValidate
-          onSubmit={handleSubmit}
-          sx={{ mt: 3 }}
-          encType="multipart/form-data"
+          sx={{
+            marginTop: 8,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
         >
-          <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="owner_id"
-                name="owner_id"
-                type="hidden"
-                value={ownerId}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="name"
-                label="Nom du Lieu"
-                name="name"
-                autoComplete="name"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="address"
-<<<<<<< HEAD
-                label="Adresse"
-=======
-                label="Rue"
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
-                name="address"
-                autoComplete="address"
-                onChange={handleChange}
-              />
-            </Grid>
-<<<<<<< HEAD
-            <Grid item xs={12} sm={6}>
-=======
-            <Grid item xs={6}>
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
-              <TextField
-                required
-                fullWidth
-                id="zip_code"
-<<<<<<< HEAD
-                label="Code postal"
-=======
-                label="Code Postal"
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
-                name="zip_code"
-                autoComplete="zip_code"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={6}>
-              <TextField
-                required
-                fullWidth
-                id="city"
-                label="Ville"
-                name="city"
-                autoComplete="city"
-                onChange={handleChange}
-              />
-            </Grid>
-<<<<<<< HEAD
-
-=======
->>>>>>> c4394f02f75e013b352010af308dcb30c20ea43f
-            <Grid item xs={6}>
-              <FormControl fullWidth>
-                <InputLabel id="category-label">Catégorie</InputLabel>
-                <Select
-                  labelId="category-label"
-                  id="category_id"
-                  name="category_id"
-                  value={formData.category_id}
-                  label="Catégorie"
-                  onChange={handleChange}
-                >
-                  <MenuItem value={1}>Hôtel</MenuItem>
-                  <MenuItem value={2}>Bar</MenuItem>
-                  <MenuItem value={3}>Restaurant</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={12}>
-              <TextField
-                required
-                fullWidth
-                id="description"
-                label="Description"
-                name="description"
-                multiline
-                rows={4}
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <InputLabel htmlFor="image_path">Photo du Lieu</InputLabel>
-              <Input
-                id="image_path"
-                name="image_path"
-                type="file"
-                onChange={handleChange}
-              />
-              {imagePreview && (
-                <CardMedia
-                  component="img"
-                  image={imagePreview}
-                  alt="Aperçu de l'image sélectionnée"
-                />
-              )}
-            </Grid>
-          </Grid>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+          <Typography component="h1" variant="h5">
+            Créer un Lieu
+          </Typography>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleSubmit}
+            sx={{ mt: 3 }}
+            encType="multipart/form-data"
           >
-            Créer
-          </Button>
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <a
+                  required
+                  fullWidth
+                  id="owner_id"
+                  name="owner_id"
+                  type="hidden"
+                  value={ownerId.id}
+                  // onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="name"
+                  label="Nom du Lieu"
+                  name="name"
+                  autoComplete="name"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12} sm={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="address"
+                  label="Adresse"
+                  name="address"
+                  autoComplete="address"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="zip_code"
+                  label="Code Postal"
+                  name="zip_code"
+                  autoComplete="zip_code"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <TextField
+                  required
+                  fullWidth
+                  id="city"
+                  label="Ville"
+                  name="city"
+                  autoComplete="city"
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <FormControl fullWidth>
+                  <InputLabel id="category-label">Catégorie</InputLabel>
+                  <Select
+                    labelId="category-label"
+                    id="category_id"
+                    name="category_id"
+                    value={formData.category_id}
+                    label="Catégorie"
+                    onChange={handleChange}
+                  >
+                    <MenuItem value={1}>Hôtel</MenuItem>
+                    <MenuItem value={2}>Bar</MenuItem>
+                    <MenuItem value={3}>Restaurant</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  id="description"
+                  label="Description"
+                  name="description"
+                  multiline
+                  rows={4}
+                  onChange={handleChange}
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <InputLabel htmlFor="image_path">Photo du Lieu</InputLabel>
+                <Input
+                  id="image_path"
+                  name="image_path"
+                  type="file"
+                  onChange={handleChange}
+                />
+                {imagePreview && (
+                  <CardMedia
+                    component="img"
+                    image={imagePreview}
+                    alt="Aperçu de l'image sélectionnée"
+                  />
+                )}
+              </Grid>
+            </Grid>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Créer
+            </Button>
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
     </div>
   );
 }

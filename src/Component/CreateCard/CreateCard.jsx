@@ -135,7 +135,7 @@ function CreateCard({}) {
                 id="owner_id"
                 name="owner_id"
                 type="hidden"
-                value={ownerId}
+                value={ownerId.id}
                 onChange={handleChange}
               />
             </Grid>

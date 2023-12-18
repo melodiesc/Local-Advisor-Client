@@ -54,11 +54,12 @@ export default function RenderProfil() {
       <div className="parentProfil">
         <h1>Mon Profil</h1>
         <div className="profileInfo" id="profileInfo">
-          <label htmlFor="firstName">Prénom:</label>
-          <span id="firstName">{profileData.firstname}</span>
 
           <label htmlFor="lastName">Nom:</label>
           <span id="lastName">{profileData.lastname}</span>
+
+          <label htmlFor="firstName">Prénom:</label>
+          <span id="firstName">{profileData.firstname}</span>
 
           <label htmlFor="username">Pseudo:</label>
           <span id="username">{profileData.pseudo}</span>

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import NavBar from '../NavBar/NavBar';
 import {
   Box,
   Button,
@@ -17,17 +18,52 @@ import {
 
 function CreateCard({}) {
   const navigate = useNavigate();
+  const [ownerId, setOwnerId] = useState({ id: "" });
   const [formData, setFormData] = useState({
     owner_id: "",
     name: "",
     address: "",
     zip_code: "",
     city: "",
-    category: "",
+    category_id: "",
     description: "",
-    image_path: null,
+    image_path: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(
+          "http://localhost:8000/api/owner/profile",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setOwnerId(data.id); // Assurez-vous que data contient l'ID du propriétaire
+          setFormData((prevState) => ({
+            ...prevState,
+            owner_id: data.id, // Mettez à jour owner_id dans formData avec l'ID du propriétaire
+          }));
+        } else {
+          console.error("Error fetching profile data");
+        }
+      } catch (error) {
+        console.error("Error fetching profile data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prevState) => ({
@@ -70,6 +106,8 @@ function CreateCard({}) {
   };
 
   return (
+    <div>
+    <NavBar />
     <Container component="main" maxWidth="sm">
       <Box
         sx={{
@@ -95,8 +133,9 @@ function CreateCard({}) {
                 required
                 fullWidth
                 id="owner_id"
-                label="Gérantid"
                 name="owner_id"
+                type="hidden"
+                value={ownerId}
                 onChange={handleChange}
               />
             </Grid>
@@ -151,7 +190,7 @@ function CreateCard({}) {
                   labelId="category-label"
                   id="category_id"
                   name="category_id"
-                  value={formData.category}
+                  value={formData.category_id}
                   label="Catégorie"
                   onChange={handleChange}
                 >
@@ -201,6 +240,7 @@ function CreateCard({}) {
         </Box>
       </Box>
     </Container>
+    </div>
   );
 }
 export default CreateCard;

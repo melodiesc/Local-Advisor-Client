@@ -128,17 +128,13 @@ function CreateCard({}) {
           encType="multipart/form-data"
         >
           <Grid container spacing={2}>
-            <Grid item xs={12}>
-              <TextField
+              <input
                 required
-                fullWidth
                 id="owner_id"
                 name="owner_id"
                 type="hidden"
                 value={ownerId.id}
-                onChange={handleChange}
-              />
-            </Grid>
+                onChange={handleChange}></input>
             <Grid item xs={12}>
               <TextField
                 required
@@ -165,6 +161,7 @@ function CreateCard({}) {
               <TextField
                 required
                 fullWidth
+                type="number"
                 id="zip_code"
                 label="Code Postal"
                 name="zip_code"

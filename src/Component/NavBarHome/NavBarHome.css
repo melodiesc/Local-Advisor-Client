@@ -17,7 +17,7 @@ body {
 }
 
 .logoLocal {
-  height: 4vh;
+  height: 2.5em;
 }
 
 .logoLocal:hover {
@@ -110,7 +110,7 @@ body {
 }
 
 .navbarhome .menu-items {
-  background:white;
+  background: white;
   padding-top: 5em;
   box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.5);
   height: 30vh;
@@ -162,6 +162,6 @@ body {
   cursor: pointer;
 }
 
-.navLink::selection  {
+.navLink::selection {
   background: transparent;
 }

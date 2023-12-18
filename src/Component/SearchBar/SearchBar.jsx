@@ -62,7 +62,7 @@ export default function SearchBar() {
       case 'restaurant':
         return "Quel restaurant recherchez-vous?";
       case 'all' :
-        return "Rechercher...";
+        return "Rechercher";
     }
   };
 
@@ -81,7 +81,7 @@ export default function SearchBar() {
 
         <label htmlFor="all" className={`labelFilter ${selectedOption === 'all' ? 'selected' : ''}`}>
           <IonIcon className="icon-filter-search" icon={home} />
-          Globale
+          Tout rechercher
         </label>
         <input
           type="radio"

@@ -66,12 +66,12 @@ export default function NavBarHome() {
                     </a>
                   </li>
                   {auth && isOwner === "true" && (
-                        <li>
-                            <a className="navLink" onClick={navigateToCreateCard}>
-                                Créer un post
-                            </a>
-                        </li>
-                    )}
+                    <li>
+                      <a className="navLink" onClick={navigateToCreateCard}>
+                        Créer un post
+                      </a>
+                    </li>
+                  )}
                   <li>
                     <a className="navLink" onClick={handleLogout}>
                       Déconnexion

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from '../NavBar/NavBar';
 import {
@@ -15,27 +15,62 @@ import {
   Input,
   CardMedia,
 } from "@mui/material";
-import { navigate } from "ionicons/icons";
 
-function CreateCard({ userId }) {
+function CreateCard({}) {
+  const navigate = useNavigate();
+  const [ownerId, setOwnerId] = useState({ id: "" });
   const [formData, setFormData] = useState({
+    owner_id: "",
     name: "",
-    streetNumber: "",
-    street: "",
-    postalCode: "",
+    address: "",
+    zip_code: "",
     city: "",
-    category: "",
+    category_id: "",
     description: "",
-    photo: null,
+    image_path: "",
   });
   const [imagePreview, setImagePreview] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await fetch(
+          "http://localhost:8000/api/owner/profile",
+          {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + token,
+            },
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          setOwnerId(data.id); // Assurez-vous que data contient l'ID du propriétaire
+          setFormData((prevState) => ({
+            ...prevState,
+            owner_id: data.id, // Mettez à jour owner_id dans formData avec l'ID du propriétaire
+          }));
+        } else {
+          console.error("Error fetching profile data");
+        }
+      } catch (error) {
+        console.error("Error fetching profile data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prevState) => ({
       ...prevState,
       [name]: files ? files[0] : value,
     }));
-    if (name === "photo" && files) {
+    if (name === "image_path" && files) {
       const file = files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -52,9 +87,6 @@ function CreateCard({ userId }) {
     Object.keys(formData).forEach((key) => {
       data.append(key, formData[key]);
     });
-
-    // Ajouter le user_id en hidden
-    data.append("user_id", userId);
 
     try {
       const response = await fetch("http://localhost:8000/api/create_card", {
@@ -88,8 +120,25 @@ function CreateCard({ userId }) {
         <Typography component="h1" variant="h5">
           Créer un Lieu
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{ mt: 3 }}
+          encType="multipart/form-data"
+        >
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="owner_id"
+                name="owner_id"
+                type="hidden"
+                value={ownerId}
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
@@ -105,21 +154,10 @@ function CreateCard({ userId }) {
               <TextField
                 required
                 fullWidth
-                id="streetNumber"
-                label="Numéro de Rue"
-                name="streetNumber"
-                autoComplete="street-number"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="street"
+                id="address"
                 label="Rue"
-                name="street"
-                autoComplete="street"
+                name="address"
+                autoComplete="address"
                 onChange={handleChange}
               />
             </Grid>
@@ -127,7 +165,7 @@ function CreateCard({ userId }) {
               <TextField
                 required
                 fullWidth
-                id="zip_ode"
+                id="zip_code"
                 label="Code Postal"
                 name="zip_code"
                 autoComplete="zip_code"
@@ -145,14 +183,14 @@ function CreateCard({ userId }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="category-label">Catégorie</InputLabel>
                 <Select
                   labelId="category-label"
-                  id="category"
-                  name="category"
-                  value={formData.category}
+                  id="category_id"
+                  name="category_id"
+                  value={formData.category_id}
                   label="Catégorie"
                   onChange={handleChange}
                 >
@@ -175,10 +213,10 @@ function CreateCard({ userId }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <InputLabel htmlFor="photo">Photo du Lieu</InputLabel>
+              <InputLabel htmlFor="image_path">Photo du Lieu</InputLabel>
               <Input
-                id="photo"
-                name="photo"
+                id="image_path"
+                name="image_path"
                 type="file"
                 onChange={handleChange}
               />

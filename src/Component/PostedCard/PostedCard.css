@@ -14,7 +14,7 @@
   margin-bottom: 10px;
 }
 
-.titre {
+.titreFiche {
   font-size: 16px;
   margin-bottom: 5px;
 }
@@ -34,6 +34,6 @@
 }
 
 .imageFiche:hover,
-.titre:hover {
+.titreFiche:hover {
   cursor: pointer;
 }

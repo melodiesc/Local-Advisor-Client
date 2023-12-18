@@ -30,7 +30,7 @@ const LocationList = () => {
                 <div key={location.id} className="fiche" >
                     <img onClick={() => handleLocationClick(location.id)} className="imageFiche" src={location.image_path} alt={location.name} />
                     <h5 ><u>{location.category}</u></h5>
-                    <p onClick={() => handleLocationClick(location.id)} className="titre">{location.name}</p>
+                    <p onClick={() => handleLocationClick(location.id)} className="titreFiche">{location.name}</p>
                     <p>Propriétaire : {location.owner_lastname} {location.owner_firstname}</p>
                 </div>
             ))}

@@ -1,15 +1,15 @@
 .profileInfo {
   width: 25em;
-    height: 30em;
-    margin-top: 5.5em;
-    display: flex;
-    border-radius: 10%;
-    flex-direction: column;
-    box-shadow: 25px 25px 20px #8a8a8a;
-    padding: 2em;
-    align-items: center;
-    gap: 0.5em;
-    justify-content: center;
+  height: 30em;
+  margin-top: 5.5em;
+  display: flex;
+  border-radius: 10%;
+  flex-direction: column;
+  box-shadow: 25px 25px 20px #8a8a8a;
+  padding: 2em;
+  align-items: center;
+  gap: 0.5em;
+  justify-content: center;
 }
 
 .parentProfil {

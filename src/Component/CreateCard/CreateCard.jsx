@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -14,18 +14,18 @@ import {
   Input,
   CardMedia,
 } from "@mui/material";
-import { navigate } from "ionicons/icons";
 
-function CreateCard({ userId }) {
+function CreateCard({}) {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
+    owner_id: "",
     name: "",
-    streetNumber: "",
-    street: "",
-    postalCode: "",
+    address: "",
+    zip_code: "",
     city: "",
     category: "",
     description: "",
-    photo: null,
+    image_path: null,
   });
   const [imagePreview, setImagePreview] = useState(null);
   const handleChange = (e) => {
@@ -34,7 +34,7 @@ function CreateCard({ userId }) {
       ...prevState,
       [name]: files ? files[0] : value,
     }));
-    if (name === "photo" && files) {
+    if (name === "image_path" && files) {
       const file = files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -51,9 +51,6 @@ function CreateCard({ userId }) {
     Object.keys(formData).forEach((key) => {
       data.append(key, formData[key]);
     });
-
-    // Ajouter le user_id en hidden
-    data.append("user_id", userId);
 
     try {
       const response = await fetch("http://localhost:8000/api/create_card", {
@@ -85,8 +82,24 @@ function CreateCard({ userId }) {
         <Typography component="h1" variant="h5">
           Créer un Lieu
         </Typography>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit}
+          sx={{ mt: 3 }}
+          encType="multipart/form-data"
+        >
           <Grid container spacing={2}>
+            <Grid item xs={12}>
+              <TextField
+                required
+                fullWidth
+                id="owner_id"
+                label="Gérantid"
+                name="owner_id"
+                onChange={handleChange}
+              />
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 required
@@ -102,21 +115,10 @@ function CreateCard({ userId }) {
               <TextField
                 required
                 fullWidth
-                id="streetNumber"
-                label="Numéro de Rue"
-                name="streetNumber"
-                autoComplete="street-number"
-                onChange={handleChange}
-              />
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              <TextField
-                required
-                fullWidth
-                id="street"
+                id="address"
                 label="Rue"
-                name="street"
-                autoComplete="street"
+                name="address"
+                autoComplete="address"
                 onChange={handleChange}
               />
             </Grid>
@@ -124,7 +126,7 @@ function CreateCard({ userId }) {
               <TextField
                 required
                 fullWidth
-                id="zip_ode"
+                id="zip_code"
                 label="Code Postal"
                 name="zip_code"
                 autoComplete="zip_code"
@@ -142,13 +144,13 @@ function CreateCard({ userId }) {
                 onChange={handleChange}
               />
             </Grid>
-            <Grid item xs={12}>
+            <Grid item xs={6}>
               <FormControl fullWidth>
                 <InputLabel id="category-label">Catégorie</InputLabel>
                 <Select
                   labelId="category-label"
-                  id="category"
-                  name="category"
+                  id="category_id"
+                  name="category_id"
                   value={formData.category}
                   label="Catégorie"
                   onChange={handleChange}
@@ -172,10 +174,10 @@ function CreateCard({ userId }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <InputLabel htmlFor="photo">Photo du Lieu</InputLabel>
+              <InputLabel htmlFor="image_path">Photo du Lieu</InputLabel>
               <Input
-                id="photo"
-                name="photo"
+                id="image_path"
+                name="image_path"
                 type="file"
                 onChange={handleChange}
               />

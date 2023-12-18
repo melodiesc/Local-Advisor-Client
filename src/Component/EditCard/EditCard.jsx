@@ -34,9 +34,7 @@ function EditCreateCard({ isEditMode, cardData }) {
     }
   }, [isEditMode, cardData]);
 
-  const handleChange = (e) => {
-    // Gestion des changements dans les champs du formulaire
-  };
+  const handleChange = (e) => {};
 
   const handleSubmit = async (event) => {
     event.preventDefault();

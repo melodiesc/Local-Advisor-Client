@@ -42,10 +42,10 @@ function EmailPassword() {
 
     const formData = new FormData(event.target);
     const email = formData.get("email");
-
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
       const response = await fetch(
-        "http://localhost:8000/api/password/reset-email",
+        `${apiUrl}/api/password/reset-email`,
         {
           method: "POST",
           headers: {

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function RenderProfil() {
   const navigate = useNavigate();
+  const apiUrl = import.meta.env.VITE_API_URL;
   const [profileData, setProfileData] = useState({
     firstname: '',
     lastname: '',
@@ -23,7 +24,7 @@ export default function RenderProfil() {
         const isOwner = JSON.parse(localStorage.getItem('isOwner'));
         const token = localStorage.getItem('token');
 
-        let endpoint = isOwner ? 'http://localhost:8000/api/owner/profile' : 'http://localhost:8000/api/user/profile';
+        let endpoint = isOwner ? `${apiUrl}/api/owner/profile` : `${apiUrl}/api/user/profile`;
         
         const response = await fetch(endpoint, {
           method: 'GET',

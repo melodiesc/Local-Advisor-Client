@@ -8,7 +8,7 @@ export default function SearchBar() {
   let [selectedOption, setSelectedOption] = React.useState('all');
   let [searchText, setSearchText] = React.useState('');
   let [responseData, setResponseData] = React.useState(null);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   let handleInputChange = (event) => {
     setSearchText(event.target.value);
   };
@@ -16,7 +16,7 @@ export default function SearchBar() {
   let handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
-  let BASE_URL = 'http://localhost:8000/api/categories/';
+  let BASE_URL = `${apiUrl}/api/categories/`;
 
   let performAction = async () => {
     if (selectedOption === 'all' && searchText.trim() === '') {

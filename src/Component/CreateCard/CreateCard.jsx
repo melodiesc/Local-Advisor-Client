@@ -17,6 +17,7 @@ import {
 } from "@mui/material";
 
 function CreateCard({}) {
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
   const [ownerId, setOwnerId] = useState({ id: "" });
   const [formData, setFormData] = useState({
@@ -36,7 +37,7 @@ function CreateCard({}) {
       try {
         const token = localStorage.getItem("token");
         const response = await fetch(
-          "http://localhost:8000/api/owner/profile",
+          `${apiUrl}/api/owner/profile`,
           {
             method: "GET",
             headers: {
@@ -89,7 +90,7 @@ function CreateCard({}) {
     });
 
     try {
-      const response = await fetch("http://localhost:8000/api/create_card", {
+      const response = await fetch(`${apiUrl}/api/create_card`, {
         method: "POST",
         body: data,
       });

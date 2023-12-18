@@ -59,7 +59,7 @@ function Register() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-
+    const apiUrl = import.meta.env.VITE_API_URL;
     const isFormValid = () =>
       [
         "firstname",
@@ -78,7 +78,7 @@ function Register() {
       return;
     }
 
-    const response = await fetch("http://localhost:8000/api/register_owner", {
+    const response = await fetch(`${apiUrl}/api/register_owner`, {
       method: "POST",
       body: data,
     });

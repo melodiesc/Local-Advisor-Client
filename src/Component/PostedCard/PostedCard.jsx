@@ -6,11 +6,12 @@ import React, { useState, useEffect } from 'react';
 const LocationList = () => {
     const [locations, setLocations] = useState([]);
     const navigate = useNavigate(); 
-
+    const apiUrl = import.meta.env.VITE_API_URL;
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:8000/api/locations');
+                const response = await axios.get(`${apiUrl}/api/locations`);
                 setLocations(response.data.locations);
             } catch (error) {
                 console.error('Erreur lors de la récupération des données :', error);

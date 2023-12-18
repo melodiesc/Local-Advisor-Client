@@ -8,6 +8,7 @@ export default function EditProfil() {
   const isOwner = localStorage.getItem('isOwner');
   const navigate = useNavigate();
   const [formData, setFormData] = useState({firstname: '',lastname: '',birth_date: '',pseudo: '',email: '',password: '',});
+  const apiUrl = import.meta.env.VITE_API_URL;
   let userType;
   if (isOwner === "true") {
     userType = "owner";
@@ -18,7 +19,7 @@ export default function EditProfil() {
     const fetchProfileData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`http://localhost:8000/api/${userType}/profile`, {
+        const response = await fetch(`${apiUrl}/api/${userType}/profile`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -47,7 +48,7 @@ export default function EditProfil() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch(`http://localhost:8000/api/updateprofil/${userType}`, {
+      const response = await fetch(`${apiUrl}/api/updateprofil/${userType}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -46,7 +46,7 @@ function Login() {
   const navigate = useNavigate();
   const [showAlert, setShowAlert] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
   const navigateToHome = () => {
     navigate("/");
   };
@@ -55,7 +55,7 @@ function Login() {
     event.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:8000/api/login",
+        `${apiUrl}/api/login`,
         formData
       );
 

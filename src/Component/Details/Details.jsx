@@ -8,11 +8,12 @@ function Details() {
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const apiUrl = import.meta.env.VITE_API_URL;
+  
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/${id}`);
+        const response = await fetch(`${apiUrl}/api/${id}`);
         if (response.ok) {
           const data = await response.json();
           setDetails(data);

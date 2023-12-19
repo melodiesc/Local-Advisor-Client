@@ -38,10 +38,10 @@ export default function RenderProfil() {
           const data = await response.json();
           setProfileData(data);
         } else {
-          console.error('Error fetching profile data');
+          console.error('Erreur lors de la récupération des données de l\'utilisateur');
         }
       } catch (error) {
-        console.error('Error fetching profile data', error);
+        console.error('Erreur lors de la récupération des données de l\'utilisateur', error);
       }
     };
   

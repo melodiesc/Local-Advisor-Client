@@ -40,3 +40,19 @@
 .imageDetails {
   border-radius: 10%;
 }
+
+
+/* ////////////////////////////////////* CSS Section Commentaire //////////////////////////////////////// */
+
+.formNotice {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.css-ahj2mt-MuiTypography-root {
+  display: flex;
+}
+
+.css-sghohy-MuiButtonBase-root-MuiButton-root{
+  background-color: #1399b8!important;
+}

@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import NavBar from "../NavBar/NavBar";
-import "./Details.css";
 import FmdGoodIcon from "@mui/icons-material/FmdGood";
 import InfoIcon from "@mui/icons-material/Info";
 import StarIcon from "@mui/icons-material/Star";
-function Details() {
+import { Button } from "@mui/material";
+import "./Details.css";
+
+export default function Details({ currentUserOwnerId }) {
+  const navigate = useNavigate();
   const { id } = useParams();
   const [details, setDetails] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -24,17 +27,21 @@ function Details() {
           );
         }
       } catch (error) {
-        console.error("Erreur:", error);
         setError(error.message);
       } finally {
         setIsLoading(false);
       }
     };
+
     fetchDetails();
   }, [id]);
 
+  const navigateToEditCard = () => {
+    navigate(`/${id}/editcard`);
+  };
+
   if (isLoading) {
-    return <div className="loading">Chargement...</div>; // Remplacé CircularProgress par un div
+    return <div className="loading">Chargement...</div>;
   }
 
   if (error) {
@@ -44,6 +51,8 @@ function Details() {
   if (!details) {
     return <div>Aucune donnée disponible</div>;
   }
+
+  const isOwner = currentUserOwnerId === details.owner_id;
 
   return (
     <div>
@@ -63,22 +72,32 @@ function Details() {
           )}
 
           <div className="typography">
-            <StarIcon className="locic" fontSize="small" />{" "}
-            {details.rate ? details.rate.name : "/5"}
+            <StarIcon className="locic" fontSize="small" />
+            {details.rate ? `${details.rate}/5` : "Non noté"}
             <StarIcon className="locic" fontSize="small" />
           </div>
+
           <div className="typography">
-            <FmdGoodIcon className="locic" fontSize="small" /> {details.address}
-            , {details.zip_code} {details.city}
+            <FmdGoodIcon className="locic" fontSize="small" />
+            {`${details.address}, ${details.zip_code} ${details.city}`}
           </div>
+
           <div className="typography">
-            <InfoIcon className="locic" fontSize="small" />{" "}
+            <InfoIcon className="locic" fontSize="small" />
             {details.description}
           </div>
+
+          {isOwner && (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={navigateToEditCard}
+            >
+              Modifier
+            </Button>
+          )}
         </div>
       </div>
     </div>
   );
 }
-
-export default Details;

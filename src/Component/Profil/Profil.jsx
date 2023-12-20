@@ -1,36 +1,39 @@
-import React, { useState, useEffect } from 'react';
-import NavBar from '../NavBar/NavBar';
-import { useNavigate } from 'react-router-dom';
+import "./Profil.css";
+import React, { useState, useEffect } from "react";
+import NavBar from "../NavBar/NavBar";
+import { useNavigate } from "react-router-dom";
 
 export default function RenderProfil() {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_API_URL;
   const [profileData, setProfileData] = useState({
-    firstname: '',
-    lastname: '',
-    birth_date: '',
-    pseudo: '',
-    email: '',
-    password: '',
+    firstname: "",
+    lastname: "",
+    birth_date: "",
+    pseudo: "",
+    email: "",
+    password: "",
   });
 
   const navigateToEditProfil = () => {
-    navigate('/editprofil');
+    navigate("/editprofil");
   };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const isOwner = JSON.parse(localStorage.getItem('isOwner'));
-        const token = localStorage.getItem('token');
+        const isOwner = JSON.parse(localStorage.getItem("isOwner"));
+        const token = localStorage.getItem("token");
 
-        let endpoint = isOwner ? `${apiUrl}/api/owner/profile` : `${apiUrl}/api/user/profile`;
-        
+        let endpoint = isOwner
+          ? `${apiUrl}/api/owner/profile`
+          : `${apiUrl}/api/user/profile`;
+
         const response = await fetch(endpoint, {
-          method: 'GET',
+          method: "GET",
           headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + token,
           },
         });
 
@@ -38,24 +41,27 @@ export default function RenderProfil() {
           const data = await response.json();
           setProfileData(data);
         } else {
-          console.error('Erreur lors de la récupération des données de l\'utilisateur');
+          console.error(
+            "Erreur lors de la récupération des données de l'utilisateur"
+          );
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données de l\'utilisateur', error);
+        console.error(
+          "Erreur lors de la récupération des données de l'utilisateur",
+          error
+        );
       }
     };
-  
+
     fetchData();
   }, []);
-  
-  
+
   return (
     <div>
       <NavBar />
       <div className="parentProfil">
         <h1>Mon Profil</h1>
         <div className="profileInfo" id="profileInfo">
-
           <label htmlFor="lastName">Nom:</label>
           <span id="lastName">{profileData.lastname}</span>
 

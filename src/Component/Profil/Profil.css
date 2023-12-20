@@ -3,9 +3,9 @@
   height: 30em;
   margin-top: 5.5em;
   display: flex;
-  border-radius: 10%;
+  border-radius: 2%;
   flex-direction: column;
-  box-shadow: 25px 25px 20px #8a8a8a;
+  box-shadow: 0px 0px 6px #8a8a8a;
   padding: 2em;
   align-items: center;
   gap: 0.5em;
@@ -20,14 +20,33 @@
   align-items: center;
 }
 
-.editprofil-btn {
+#profileInfo > button {
+  padding: 1em;
+  background-color: #1399b8;
+  border: none;
+  color: white;
+}
+
+#profileInfo > button:hover {
+  box-shadow: 0px 0px 10px #8a8a8a;
+  cursor: pointer;
+}
+/* .validate-btn {
   background: transparent;
   border: none;
   font-size: 1.2em;
   margin-top: 1.2em;
 }
 
-.editprofil-btn:hover {
+.validate-btn:hover {
   cursor: pointer;
   border-bottom: 1px solid black;
+} */
+
+#profileInfo > label:nth-child(1),
+#profileInfo > label:nth-child(3),
+#profileInfo > label:nth-child(5),
+#profileInfo > label:nth-child(7),
+#profileInfo > label:nth-child(9) {
+  font-weight: 600;
 }

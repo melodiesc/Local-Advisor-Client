@@ -98,6 +98,15 @@
     border: none;
 
   }
+  .menu-items{
+    height: 44vh!important;
+    width: 24em!important;
+
+  }
+  .css-1xu4k7e .MuiTextField-root{
+    margin: 8px;
+    width: 17em!important;
+  }
 
   #root > div > div > div.center > div > div.details > main > div > form > div > div.MuiBox-root.css-1xu4k7e > div > div{
     margin: 8px;

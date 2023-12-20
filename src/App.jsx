@@ -10,6 +10,7 @@ import CreateCard from "./Component/CreateCard/CreateCard";
 import Details from "./Component/Details/Details";
 import Email from "./Component/RecoverPassword/Email";
 import Password from "./Component/RecoverPassword/Password";
+import EditCard from "./Component/EditCard/EditCard";
 
 function App() {
   const router = createBrowserRouter([
@@ -57,6 +58,10 @@ function App() {
       path: "/reset_password",
       element: <Password />,
     },
+    {
+      path: "/update/:id",
+      element: <EditCard />
+    }
   ]);
   return (
     <div>

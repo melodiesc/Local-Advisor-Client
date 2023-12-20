@@ -1,12 +1,17 @@
 import "./Details.css";
 import NavBar from "../NavBar/NavBar";
+import { IonIcon } from '@ionic/react';
 import Alert from "@mui/material/Alert";
 import { useParams } from "react-router-dom";
+import { trash, send, create } from 'ionicons/icons';
+import { useNavigate } from "react-router-dom";
 import React, { useState, useEffect } from "react";
+import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
 import {Container,Typography,Box,CardMedia,CircularProgress,TextField,Button,Stack,Rating,} from "@mui/material";
 
 function Details() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const numericId = parseInt(id, 10);
   const [rate, setRate] = useState(0);
   const [error, setError] = useState(null);
@@ -23,7 +28,11 @@ function Details() {
   const [content, setContent] = useState([]);
   const [noticeId, setNoticeId] = useState(null);
   const [averageRating, setAverageRating] = useState(0);
-
+  const [showConfirmAlert, setShowConfirmAlert] = useState(false);
+  const navigateToHome = () => {window.location.href = "/";};
+  const navigateToEditCard = () => {
+    navigate(`/update/${numericId}`);
+  };
   //////////////////////////////////////* Récupération des réponses du gérant */////////////////////////////////////////
 
   useEffect(() => {
@@ -209,6 +218,42 @@ function Details() {
     }
   }
 
+  //////////////////////////////////////* Gestion de la suppression du lieu par le gérant */////////////////////////////////////////
+
+  const handleSubmitDestroy = async (e) => {
+    e.preventDefault();
+    setShowConfirmAlert(true);
+  };
+
+  const handleConfirmDestroy = async (e) => {
+    e.preventDefault();
+    try {
+        const response = await fetch(`${apiUrl}/api/locations/${numericId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer ' + token,
+            },
+        });
+        if (response.ok) {
+            console.log('Lieu supprimé avec succès');
+            setShowConfirmAlert(false);
+            setShowAlert(true);
+            setTimeout(() => {
+              navigateToHome();
+            }, 1500);
+        } else {
+            console.error('Erreur lors de la suppression du lieu');
+        }
+    } catch (error) {
+        console.error('Erreur', error);
+    }
+  };
+
+  const handleCancelDestroy = () => {
+    setShowConfirmAlert(false);
+  };
+
   return (
     <div>
       <NavBar />
@@ -216,6 +261,11 @@ function Details() {
         <div className="parentDetails">
           <div className="details">
             <Container component="main" maxWidth="md">
+                {showAlert && (
+                <Alert severity="success">
+                  Lieu supprimé avec succès. Redirection vers la page d'accueil.
+                </Alert>
+                )}
               <Box sx={{ my: 4 }}>
                   <h1 className="titre">
                     {details.category.category} {details.name}
@@ -233,7 +283,6 @@ function Details() {
                     <u>Adresse:</u> {details.address}, {details.zip_code}{" "}
                     {details.city}
                   </p>
-                  
                   <p className="rate">
                     {!details.rate ? (
                       <Box
@@ -251,7 +300,25 @@ function Details() {
                   </Box> ) : "Non spécifié"}
                   </p>
                   <p className="description">{details.description}</p>
-
+                  {userId.id === details.owner_id  && isOwner === "true" ? (
+                    <div className="destroy">
+                    <form onSubmit={handleSubmitDestroy}>
+                      <Stack spacing={2} direction="row">
+                        <Button type='submit' variant="contained" className="icon-destroy-location"><IonIcon icon={trash}/></Button>
+                      </Stack>
+                    </form>
+                      <Stack spacing={2} direction="row">
+                        <Button type='submit' variant="contained" className="icon-update-location" onClick={navigateToEditCard}><IonIcon icon={create}/></Button>
+                      </Stack>
+                    <ConfirmAlert
+                      open={showConfirmAlert}
+                      onClose={handleCancelDestroy}
+                      onConfirm={handleConfirmDestroy}
+                      title="Confirmation de suppression"
+                      content="Êtes-vous sûr de vouloir supprimer ce lieu ?"
+                    />
+                    </div>
+                  ) : "" }
                 {isOwner === "false" ? (
                 <form onSubmit={handleSubmit}>
                   <div className="formNotice">
@@ -288,7 +355,7 @@ function Details() {
                     </div>
                   </Box>
                   <Stack spacing={2} direction="row">
-                    <Button type='submit' variant="contained">Commenter</Button>
+                    <Button type='submit' variant="contained"><IonIcon className="icon-filter-search" icon={send} /></Button>
                   </Stack>
                   {showAlert && (
                     <Alert severity="success">
@@ -352,13 +419,13 @@ function Details() {
                     />
                   </Box>
                     <Stack spacing={2} direction="row">
-                      <Button type='submit' variant="contained">Répondre</Button>
+                      <Button type='submit' variant="contained"><IonIcon className="icon-filter-search" icon={send} /></Button>
                     </Stack>
                     {showAlert && (
                     <Alert severity="success">
                       Réponse postée avec succès.
                     </Alert>
-                  )}
+                    )}
                   </div>
                 </form>
               ) : ""

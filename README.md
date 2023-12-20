@@ -14,3 +14,12 @@ npm install @mui/material @mui/styled-engine-sc styled-components
 
 npm install ionicons
 npm install @ionic/react
+
+
+Utilisateur membre :
+email : membre@gmail.com
+mdp : 1234
+
+Utilisateur gérant :
+email : gerant@gmail.com
+mdp : 1234

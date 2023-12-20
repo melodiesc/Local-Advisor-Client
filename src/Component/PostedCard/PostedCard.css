@@ -70,6 +70,15 @@
     width: 50%!important;
     gap: 15px;
   }
+  .searchInput {
+    padding-left: 1em;
+    border-radius: 20px 0px 0px 20px;
+    border-right: none;
+    height: 4vh;
+    width: 75%!important;
+    color: black;
+  }
+
   #root > div > div:nth-child(1) > nav > div > div > div.menu-items{
     height: 33vh;
   }

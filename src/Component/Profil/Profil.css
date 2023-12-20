@@ -12,6 +12,10 @@
   justify-content: center;
 }
 
+.profil {
+  color:#1399b8;
+}
+
 .parentProfil {
   margin-top: 3em;
   display: flex;
@@ -49,4 +53,37 @@
 #profileInfo > label:nth-child(7),
 #profileInfo > label:nth-child(9) {
   font-weight: 600;
+}
+
+/* Media query pour les téléphones */
+@media screen and (max-width: 480px) {
+  #root > div > div > div.parentProfil{
+    margin-top: 2em;
+  }
+  .profileInfo {
+    width: 100%;
+    height: auto;
+    margin-top: 3em;
+    padding: 1em
+  }
+}
+
+/* Media query pour les tablettes en mode portrait */
+@media screen and (max-width: 768px) {
+  .profileInfo {
+    width: 80%;
+    height: auto;
+    margin-top: 2em;
+    padding: 1.5em;
+  }
+}
+
+/* Media query pour les tablettes en mode paysage */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+  .profileInfo {
+    width: 60%;
+    height: auto;
+    margin-top: 5em;
+    padding: 2em;
+  }
 }

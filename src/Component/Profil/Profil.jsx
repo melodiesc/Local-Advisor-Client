@@ -60,7 +60,7 @@ export default function RenderProfil() {
     <div>
       <NavBar />
       <div className="parentProfil">
-        <h1>Mon Profil</h1>
+        <h1 className="profil">Mon Profil</h1>
         <div className="profileInfo" id="profileInfo">
           <label htmlFor="lastName">Nom:</label>
           <span id="lastName">{profileData.lastname}</span>

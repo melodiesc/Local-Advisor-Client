@@ -2,6 +2,10 @@
   font-weight: 600;
 }
 
+.modifierProfil {
+  color: #1399b8;
+}
+
 .validate-btn {
   padding: 1em;
   background-color: #1399b8;
@@ -27,4 +31,25 @@
   border-color: #1399b8;
   border-radius: 5px;
   outline: 1px solid #1399b8;
+}
+
+/* Media queries pour les appareils mobiles */
+@media screen and (max-width: 480px) {
+  .profileInfo{
+    margin-top: 1.2em;
+  }
+  .parentProfil{
+    margin-top: 1em!important;
+  }
+  .modifierProfil {
+    font-size: 1.8em;
+  }
+  
+}
+
+/* Media queries pour les tablettes */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+  .inputEditProfil {
+    padding: 0.8em; /* Ajuster le rembourrage pour les tablettes */
+  }
 }

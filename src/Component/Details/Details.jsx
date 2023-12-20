@@ -22,6 +22,7 @@ function Details() {
   const [responses, setResponses] = useState([]);
   const [content, setContent] = useState([]);
   const [noticeId, setNoticeId] = useState(null);
+  const [averageRating, setAverageRating] = useState(0);
 
   //////////////////////////////////////* Récupération des réponses du gérant */////////////////////////////////////////
 
@@ -32,7 +33,6 @@ function Details() {
         if (response.ok) {
           const responseData = await response.json();
           setResponses(responseData);
-          console.log(responseData);
         } else {
           console.error('Erreur lors de la récupération des réponses du gérant.');
         }
@@ -53,6 +53,12 @@ function Details() {
         if (response.ok) {
           const data = await response.json();
           setNotices(data.data);
+
+        const totalRating = data.data.reduce((sum, notice) => sum + notice.rate, 0);
+        const countRating = data.data.length;
+        const average = countRating > 0 ? totalRating / countRating : 0;
+        setAverageRating(average);
+
         } else {
           console.error('Erreur lors de la récupération des commentaires et des notes.');
         }
@@ -155,6 +161,10 @@ function Details() {
   
       if (response.ok) {
         console.log('Réponse postée avec succès.');
+        setShowAlert(true);
+          setTimeout(() => {
+            window.location.reload();
+          }, 2000);
       } else {
         console.error('Erreur lors l\'envoi de la réponse.');
       }
@@ -223,19 +233,21 @@ function Details() {
                     <u>Adresse:</u> {details.address}, {details.zip_code}{" "}
                     {details.city}
                   </p>
-                  <Box
-                    sx={{
-                      "& > legend": { mt: 2 },
-                    }}
-                  >
+                  
+                  <p className="rate">
+                    {!details.rate ? (
+                      <Box
+                      sx={{
+                        "& > legend": { mt: 2 },
+                      }}
+                    >
                     <Typography component="legend">Note moyenne :</Typography>
                     <Rating
                       name="simple-controlled"
-                      // value={averageRate}
+                      value={averageRating}
+                      readOnly
                     />
-                  </Box>
-                  <p className="rate">
-                    {details.rate ? details.rate.name : "Non spécifié"}
+                  </Box> ) : "Non spécifié"}
                   </p>
                   <p className="description">{details.description}</p>
 
@@ -294,8 +306,16 @@ function Details() {
               <div className="commentUser">
               <h2>{notice.pseudo}</h2>
               <h5>Posté le : {notice.created_at}</h5>
-              <p>Note : {notice.rate}/5</p>
-              <p>Avis :</p>
+              <Box
+                    >
+                    <Typography>Note :
+                    <Rating
+                      value={notice.rate}
+                      readOnly 
+                    />
+                    </Typography>
+                  </Box>
+              <h4>Avis :</h4>
               <p>{notice.comment}</p>
               </div>
               <div className="responsesSection">
@@ -303,7 +323,7 @@ function Details() {
                   .filter((response) => response.notice_id === notice.id)
                   .map(response => (
                       <div key={response.id}>
-                          <h4>Le gérant {response.pseudo} a répondu :</h4><br></br>
+                          <h4>Le/La gérant(e) {response.pseudo} a répondu :</h4><br></br>
                           <p>{response.content}</p><br></br>
                       </div>
                   ))}

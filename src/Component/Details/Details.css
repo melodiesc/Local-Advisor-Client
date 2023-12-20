@@ -83,3 +83,8 @@
 .comms {
   margin-top: 2em;
 }
+
+.commentUser {
+  padding-bottom: 2em;
+  border-bottom: 1px solid #1399b8;
+}

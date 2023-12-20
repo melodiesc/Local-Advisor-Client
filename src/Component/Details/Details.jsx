@@ -1,11 +1,9 @@
 import "./Details.css";
-import axios from 'axios';
 import NavBar from "../NavBar/NavBar";
+import Alert from "@mui/material/Alert";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import {Container,Typography,Box,CardMedia,CircularProgress,TextField,Button,Stack,Rating,} from "@mui/material";
-import { Margin } from "@mui/icons-material";
-import Alert from "@mui/material/Alert";
 
 function Details() {
   const { id } = useParams();

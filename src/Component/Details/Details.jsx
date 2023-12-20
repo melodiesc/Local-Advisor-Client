@@ -18,7 +18,7 @@ function Details() {
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
-  const [notices, setNotices] = useState({});
+  const [notices, setNotices] = useState([]);
 
   //////////////////////////////////////* Récupération des commentaires et des notes */////////////////////////////////////////
   useEffect(() => {
@@ -223,7 +223,6 @@ function Details() {
             </Container>
           </div>
           <div className="renderNotice">
-            <h1 className="comms">Commentaires :</h1>
           {notices && notices.map((notice) => (
             <div className="noticeFiche" key={notice.id}>
               <h2>{notice.pseudo}</h2>
@@ -231,6 +230,12 @@ function Details() {
               <p>Note : {notice.rate}/5</p>
               <p>Avis :</p>
               <p>{notice.comment}</p>
+              {isOwner === "true" ? (
+                <Stack spacing={2} direction="row">
+                <Button type='submit' variant="contained">Répondre</Button>
+              </Stack>
+              ) : ""
+              }
             </div>
           ))}
           </div>

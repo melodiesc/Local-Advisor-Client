@@ -2,11 +2,13 @@ import "./EditProfil.css";
 import React, { useState, useEffect } from "react";
 import NavBar from "../NavBar/NavBar";
 import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 
 export default function EditProfil() {
   const token = localStorage.getItem("token");
   const isOwner = localStorage.getItem("isOwner");
   const navigate = useNavigate();
+  const [showAlert, setShowAlert] = useState(false);
   const [formData, setFormData] = useState({
     firstname: "",
     lastname: "",
@@ -65,7 +67,9 @@ export default function EditProfil() {
       });
 
       if (response.ok) {
-        navigate("/profil");
+        setShowAlert(true);
+        setTimeout(() => 
+        {navigate("/profil");}, 1500);
       } else {
         console.error("Error updating profile");
       }
@@ -148,6 +152,11 @@ export default function EditProfil() {
           <button className="validate-btn" type="submit">
             Valider
           </button>
+          {showAlert && (
+            <Alert severity="success">
+              Profil modifié avec succès.
+            </Alert>
+          )}
         </form>
       </div>
     </div>

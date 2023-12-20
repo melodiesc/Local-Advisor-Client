@@ -1,9 +1,11 @@
 import "./Details.css";
+import axios from 'axios';
 import NavBar from "../NavBar/NavBar";
 import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import {Container,Typography,Box,CardMedia,CircularProgress,TextField,Button,Stack,Rating,} from "@mui/material";
 import { Margin } from "@mui/icons-material";
+import Alert from "@mui/material/Alert";
 
 function Details() {
   const { id } = useParams();
@@ -17,7 +19,29 @@ function Details() {
   const isOwner = localStorage.getItem('isOwner');
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState(0);
+  const [showAlert, setShowAlert] = useState(false);
+  const [notices, setNotices] = useState({});
 
+  //////////////////////////////////////* Récupération des commentaires et des notes */////////////////////////////////////////
+  useEffect(() => {
+    const fetchNotices = async () => {
+      try {
+        const response = await fetch(`${apiUrl}/api/${id}/notices/show`);
+        if (response.ok) {
+          const data = await response.json();
+          setNotices(data.data);
+        } else {
+          console.error('Erreur lors de la récupération des commentaires et des notes.');
+        }
+      } catch(error){
+        console.error('Erreur lors de la récupération des commentaires et des notes.', error);
+      }
+    };
+
+    fetchNotices();
+  }, []);
+
+  //////////////////////////////////////* Récupération des données utilisateurs */////////////////////////////////////////
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,16 +56,17 @@ function Details() {
           const data = await response.json();
           setUserId(data);
         } else {
-          console.error('Erreur lors de la récupération des données de l\'utilisateur');
+          console.error('Erreur lors de la récupération des données de l\'utilisateur.');
         }
       } catch (error) {
-        console.error('Erreur lors de la récupération des données de l\'utilisateur', error);
+        console.error('Erreur lors de la récupération des données de l\'utilisateur.', error);
       }
     };
     
     fetchData();
   }, []);
 
+  //////////////////////////////////////* Récupération des données du lieu */////////////////////////////////////////
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -79,7 +104,7 @@ function Details() {
     console.log('id de l\'utilisateur', userId.id);
 
     try {
-      const response = await fetch (`${apiUrl}/api/${numericId}/notices` , {
+      const response = await fetch (`${apiUrl}/api/${numericId}/notices/store` , {
         method: 'POST',
         headers: {
           'Content-Type' : 'application/json',
@@ -98,6 +123,10 @@ function Details() {
 
       if(response.ok) {
         console.log('Commentaire posté avec succès');
+        setShowAlert(true);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
       } else {
         console.error('Erreur lors de la soumission du commentaire');
       }
@@ -109,85 +138,104 @@ function Details() {
   return (
     <div>
       <NavBar />
-      <div className="parentDetails">
-        <div className="details">
-          <Container component="main" maxWidth="md">
-            <Box sx={{ my: 4 }}>
-                <h1 className="titre">
-                  {details.category.category} {details.name}
-                </h1>
-              {details.image_path && (
-                <CardMedia
-                  component="img"
-                  className="imageDetails"
-                  image={details.image_path}
-                  alt={`Photo du lieu ${details.name}`}
-                  sx={{ width: "100%", mb: 2 }}
-                />
-              )}
-                <p className="address">
-                  <u>Adresse:</u> {details.address}, {details.zip_code}{" "}
-                  {details.city}
-                </p>
-                <Box
-                  sx={{
-                    "& > legend": { mt: 2 },
-                  }}
-                >
-                  <Typography component="legend">Note moyenne :</Typography>
-                  <Rating
-                    name="simple-controlled"
-                    // value={averageRate}
+      <div className="center">
+        <div className="parentDetails">
+          <div className="details">
+            <Container component="main" maxWidth="md">
+              <Box sx={{ my: 4 }}>
+                  <h1 className="titre">
+                    {details.category.category} {details.name}
+                  </h1>
+                {details.image_path && (
+                  <CardMedia
+                    component="img"
+                    className="imageDetails"
+                    image={details.image_path}
+                    alt={`Photo du lieu ${details.name}`}
+                    sx={{ width: "100%", mb: 2 }}
                   />
-                </Box>
-                <p className="rate">
-                  {details.rate ? details.rate.name : "Non spécifié"}
-                </p>
-                <p className="description">{details.description}</p>
-
-              {isOwner === "false" ? (
-              <form onSubmit={handleSubmit}>
-                <div className="formNotice">
-                <input name="numericId" type='hidden' defaultValue={numericId} />
-                <input name="user_id" type='hidden' defaultValue={userId.id} />
-                <Box
+                )}
+                  <p className="address">
+                    <u>Adresse:</u> {details.address}, {details.zip_code}{" "}
+                    {details.city}
+                  </p>
+                  <Box
+                    sx={{
+                      "& > legend": { mt: 2 },
+                    }}
                   >
-                  <Typography component="legend" >Note :
-                  <Rating
-                    name='rate'
-                    value={rate}
-                    onChange={(event, newRate) => {setRate(newRate)}}
-                  />
-                  </Typography>
-                </Box>
-                <Box
-                  sx={{
-                    "& .MuiTextField-root": { m: 1, width: "30em" },
-                  }}
-                  noValidate
-                  autoComplete="off"
-                >
-                  <div>
-                    <TextField
-                      id="outlined-multiline-static"
-                      label="Votre commentaire"
-                      name='comment'
-                      multiline
-                      rows={6}
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
+                    <Typography component="legend">Note moyenne :</Typography>
+                    <Rating
+                      name="simple-controlled"
+                      // value={averageRate}
                     />
+                  </Box>
+                  <p className="rate">
+                    {details.rate ? details.rate.name : "Non spécifié"}
+                  </p>
+                  <p className="description">{details.description}</p>
+
+                {isOwner === "false" ? (
+                <form onSubmit={handleSubmit}>
+                  <div className="formNotice">
+                  <input name="numericId" type='hidden' defaultValue={numericId} />
+                  <input name="user_id" type='hidden' defaultValue={userId.id} />
+                  <Box
+                    >
+                    <Typography component="legend" >Note :
+                    <Rating
+                      name='rate'
+                      value={rate}
+                      onChange={(event, newRate) => {setRate(newRate)}}
+                    />
+                    </Typography>
+                  </Box>
+                  <Box
+                    sx={{
+                      "& .MuiTextField-root": { m: 1, width: "30em" },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                  >
+                    <div>
+                      <TextField
+                        id="outlined-multiline-static"
+                        label="Votre commentaire"
+                        name='comment'
+                        multiline
+                        rows={6}
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+                    </div>
+                  </Box>
+                  <Stack spacing={2} direction="row">
+                    <Button type='submit' variant="contained">Commenter</Button>
+                  </Stack>
+                  {showAlert && (
+                    <Alert severity="success">
+                      Commentaire posté avec succès.
+                    </Alert>
+                  )}
                   </div>
-                </Box>
-                <Stack spacing={2} direction="row">
-                  <Button type='submit' variant="contained">Commenter</Button>
-                </Stack>
-                </div>
-              </form>
-              ) : ""
-              }
-            </Box>
-          </Container>
+                </form>
+                ) : ""
+                }
+              </Box>
+            </Container>
+          </div>
+          <div className="renderNotice">
+            <h1 className="comms">Commentaires :</h1>
+          {notices && notices.map((notice) => (
+            <div className="noticeFiche" key={notice.id}>
+              <h2>{notice.pseudo}</h2>
+              <h5>Posté le : {notice.created_at}</h5>
+              <p>Note : {notice.rate}/5</p>
+              <p>Avis :</p>
+              <p>{notice.comment}</p>
+            </div>
+          ))}
+          </div>
         </div>
       </div>
     </div>

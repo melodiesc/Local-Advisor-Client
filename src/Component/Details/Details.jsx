@@ -19,8 +19,12 @@ function Details() {
   const [userId, setUserId] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
   const [notices, setNotices] = useState([]);
+  const [content, setContent] = useState([]);
+  const [noticeId, setNoticeId] = useState(null);
+
 
   //////////////////////////////////////* Récupération des commentaires et des notes */////////////////////////////////////////
+
   useEffect(() => {
     const fetchNotices = async () => {
       try {
@@ -28,6 +32,7 @@ function Details() {
         if (response.ok) {
           const data = await response.json();
           setNotices(data.data);
+          console.log(data);
         } else {
           console.error('Erreur lors de la récupération des commentaires et des notes.');
         }
@@ -40,19 +45,27 @@ function Details() {
   }, []);
 
   //////////////////////////////////////* Récupération des données utilisateurs */////////////////////////////////////////
+
   useEffect(() => {
     const fetchData = async () => {
-      try {
-        const response = await fetch(`${apiUrl}/api/user/profile`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + token,
-          },
+        try {
+        let userType;
+          if (isOwner === "true") {
+            userType = "owner";
+          } else {
+            userType = "user";
+          }
+        const response = await fetch(`${apiUrl}/api/${userType}/profile`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
         });
         if (response.ok) {
           const data = await response.json();
           setUserId(data);
+          console.log(data);
         } else {
           console.error('Erreur lors de la récupération des données de l\'utilisateur.');
         }
@@ -65,6 +78,7 @@ function Details() {
   }, []);
 
   //////////////////////////////////////* Récupération des données du lieu */////////////////////////////////////////
+
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -72,6 +86,7 @@ function Details() {
         if (response.ok) {
           const data = await response.json();
           setDetails(data);
+          console.log(data);
         } else {
           throw new Error(
             "Une erreur est survenue lors de la récupération des données"
@@ -93,6 +108,50 @@ function Details() {
   if (error) {
     return <div>Erreur: {error}</div>;
   }
+
+   //////////////////////////////////////* Gestion de la réponse gérant */////////////////////////////////////////
+
+  const handleContentChange = (noticeId, content) => {
+    setContent((prevContent) => ({
+      ...prevContent,
+      [noticeId]: content,
+    }));
+    setNoticeId(noticeId);
+    console.log('content', content);
+    console.log('noticeId', noticeId);
+    console.log('userId.id', userId.id);
+  };
+
+  const handleSubmitResponse = async (e) => {
+    e.preventDefault();
+    try {
+      console.log("Content:", content[noticeId]);
+      console.log("Owner ID:", userId.id);
+      console.log("Notice ID:", noticeId);
+      const response = await fetch(`${apiUrl}/api/${numericId}/responses/store`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+        body: JSON.stringify({
+          content: content,
+          owner_id: userId.id,
+          notice_id: noticeId,
+        }),
+      });
+  
+      if (response.ok) {
+        console.log('Response posted successfully');
+      } else {
+        console.error('Error posting response');
+      }
+    } catch (error) {
+      console.error('Error', error);
+    }
+  };
+
+   //////////////////////////////////////* Gestion de l'envoi du commentaire */////////////////////////////////////////
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -230,10 +289,38 @@ function Details() {
               <p>Note : {notice.rate}/5</p>
               <p>Avis :</p>
               <p>{notice.comment}</p>
-              {isOwner === "true" ? (
-                <Stack spacing={2} direction="row">
-                <Button type='submit' variant="contained">Répondre</Button>
-              </Stack>
+              {userId.id === details.owner_id  && isOwner === "true" ? (
+                <form onSubmit={handleSubmitResponse}>
+                  <div className="formNotice">
+                  <input name="notice_id" type='hidden' defaultValue={noticeId} />
+                  <input name="owner_id" type='hidden' defaultValue={userId.id} />
+                  <Box
+                    sx={{
+                      "& .MuiTextField-root": { m: 1, width: "30em" },
+                    }}
+                    noValidate
+                    autoComplete="off"
+                  >
+                    <TextField
+                      id="outlined-multiline-static"
+                      label="Votre réponse"
+                      name='content'
+                      multiline
+                      rows={6}
+                      value={content[notice.id] || ''}
+                      onChange={(e) => handleContentChange(notice.id, e.target.value)}
+                    />
+                  </Box>
+                    <Stack spacing={2} direction="row">
+                      <Button type='submit' variant="contained">Répondre</Button>
+                    </Stack>
+                    {showAlert && (
+                    <Alert severity="success">
+                      Réponse postée avec succès.
+                    </Alert>
+                  )}
+                  </div>
+                </form>
               ) : ""
               }
             </div>

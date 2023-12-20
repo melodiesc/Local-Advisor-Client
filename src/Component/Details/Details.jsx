@@ -243,6 +243,7 @@ function Details() {
                     >
                     <Typography component="legend">Note moyenne :</Typography>
                     <Rating
+                      precision={0.5}
                       name="simple-controlled"
                       value={averageRating}
                       readOnly
@@ -260,6 +261,7 @@ function Details() {
                     >
                     <Typography component="legend" >Note :
                     <Rating
+                      precision={0.5}
                       name='rate'
                       value={rate}
                       onChange={(event, newRate) => {setRate(newRate)}}
@@ -306,15 +308,14 @@ function Details() {
               <div className="commentUser">
               <h2>{notice.pseudo}</h2>
               <h5>Posté le : {notice.created_at}</h5>
-              <Box
-                    >
-                    <Typography>Note :
-                    <Rating
-                      value={notice.rate}
-                      readOnly 
-                    />
-                    </Typography>
-                  </Box>
+              <Box>
+                <Typography>Note :
+                <Rating
+                  value={notice.rate}
+                  readOnly 
+                />
+                </Typography>
+              </Box>
               <h4>Avis :</h4>
               <p>{notice.comment}</p>
               </div>

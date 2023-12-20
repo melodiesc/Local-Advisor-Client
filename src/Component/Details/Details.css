@@ -94,3 +94,75 @@
   flex-direction: row-reverse;
   gap: 10px;
 }
+
+/* Media queries pour les téléphones */
+@media screen and (max-width: 480px) {
+  .details {
+    margin-top: -2em;
+    padding: 1em;
+    box-shadow: none;
+    border: none;
+
+  }
+
+  #root > div > div > div.center > div > div.details > main > div > form > div > div.MuiBox-root.css-1xu4k7e > div > div{
+    margin: 8px;
+    width: 18em;
+  }
+
+  .titre {
+    font-size: 1.5em;
+    margin: 1em 0px 0.5em 0px;
+  }
+
+  .address,
+  .description,
+  .rate {
+    font-size: 1em;
+    margin: 0.5em;
+  }
+
+  .parentDetails {
+    margin-top: 3em;
+  }
+
+  .noticeFiche {
+    width: 90%;
+    margin: 1em;
+  }
+}
+
+/* Media queries pour les tablettes */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+  .details {
+    margin-top: -4em;
+    padding: 1.5em;
+    box-shadow: none;
+    border: none;
+  }
+
+  #root > div > div > div.center > div > div.details > main > div > form > div > div.MuiBox-root.css-1xu4k7e > div > div{
+    width: 30em;
+  }
+
+  .titre {
+    font-size: 1.8em;
+    margin: 1.5em 0px 0.8em 0px;
+  }
+
+  .address,
+  .description,
+  .rate {
+    font-size: 1.1em;
+    margin: 0.8em;
+  }
+
+  .parentDetails {
+    margin-top: 4em;
+  }
+
+  .noticeFiche {
+    width: 80%;
+    margin: 1.5em;
+  }
+}

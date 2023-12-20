@@ -38,3 +38,75 @@
 .titreFiche:hover {
   cursor: pointer;
 }
+
+@media screen and (max-width: 480px) {
+  .parent{
+    margin: 0;
+  }
+  .formFilter{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em!important;
+  }
+  .parentFiche{
+    display: flex;
+    align-items: center;
+    flex-direction: column!important;
+    margin-top: 0em!important;
+    gap: 1em;
+  }
+
+  .imageFiche{
+      height: 20vh;
+      margin-bottom: 10px 
+  }
+
+  .fiche{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 3em;
+    width: 50%!important;
+    gap: 15px;
+  }
+  #root > div > div:nth-child(1) > nav > div > div > div.menu-items{
+    height: 33vh;
+  }
+
+}
+
+/* Media queries pour les tablettes */
+@media screen and (min-width: 481px) and (max-width: 1024px) {
+  .parent{
+    margin: 0;
+
+  }
+  .formFilter{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5em!important;
+  }
+  .parentFiche{
+    display: flex;
+    align-items: center;
+    flex-direction: column!important;
+    margin-top: 0em!important;
+    gap: 1em;
+  }
+  .imageFiche{
+      width: auto!important;
+      height: 20vh;
+      margin-bottom: 10px 
+  }
+  .fiche{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    text-align: center;
+    margin-top: 3em;
+    width: 50%!important;
+    gap: 15px;
+  }
+}
+

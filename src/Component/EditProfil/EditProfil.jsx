@@ -82,7 +82,7 @@ export default function EditProfil() {
     <div>
       <NavBar />
       <div className="parentProfil">
-        <h1>Modifier profil</h1>
+        <h1 className="modifierProfil">Modifier mon profil</h1>
         <form className="profileInfo" onSubmit={handleSubmit}>
           <label className="bold" htmlFor="lastname">
             Nom:

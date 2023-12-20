@@ -89,6 +89,12 @@
   border-bottom: 1px solid #1399b8;
 }
 
+.destroy {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
+}
+
 /* Media queries pour les téléphones */
 @media screen and (max-width: 480px) {
   .details {

@@ -10,9 +10,11 @@ import ConfirmAlert from '../ConfirmAlert/ConfirmAlert';
 import {Container,Typography,Box,CardMedia,CircularProgress,TextField,Button,Stack,Rating,} from "@mui/material";
 
 function Details() {
+  // id utilisé pour récupérer les données dans la tables locations (format string)
   const { id } = useParams();
-  const navigate = useNavigate();
+  // passage de id de string en INT
   const numericId = parseInt(id, 10);
+  const navigate = useNavigate();
   const [rate, setRate] = useState(0);
   const [error, setError] = useState(null);
   const [comment, setComment] = useState('');
@@ -30,9 +32,8 @@ function Details() {
   const [averageRating, setAverageRating] = useState(0);
   const [showConfirmAlert, setShowConfirmAlert] = useState(false);
   const navigateToHome = () => {window.location.href = "/";};
-  const navigateToEditCard = () => {
-    navigate(`/update/${numericId}`);
-  };
+  const navigateToEditCard = () => {navigate(`/update/${numericId}`);};
+
   //////////////////////////////////////* Récupération des réponses du gérant */////////////////////////////////////////
 
   useEffect(() => {
@@ -62,10 +63,14 @@ function Details() {
         if (response.ok) {
           const data = await response.json();
           setNotices(data.data);
-
+          
+        // On additionne les notes récupérées dans le tableau
         const totalRating = data.data.reduce((sum, notice) => sum + notice.rate, 0);
+        // On récupère le nombre total de notes dans le tableau
         const countRating = data.data.length;
+        // Si il y a des notes alors on divise le total des notes par le nombre de total de note, sinon on affiche zéro
         const average = countRating > 0 ? totalRating / countRating : 0;
+        // On insert la valeur de la variable average dans la variable AverageRating
         setAverageRating(average);
 
         } else {
@@ -145,12 +150,18 @@ function Details() {
    //////////////////////////////////////* Gestion de la réponse gérant */////////////////////////////////////////
 
   const handleContentChange = (noticeId, content) => {
+    // Mise à jour de l'état du formulaire 
+    // prevContent conserve les anciennes valeurs de l'objet
     setContent((prevContent) => ({
+    //...prevContent copie les nouvelles valeur de l'objet tout en conservant les anciennes
       ...prevContent,
+    // met à jour content en fonction de noticeId (pour être sûr que la réponse ne soit postée que sur ce commentaire)
       [noticeId]: content,
     }));
     setNoticeId(noticeId);
   };
+
+   //////////////////////////////////////* Gestion de l'envoie de la réponse du gérant */////////////////////////////////////////
 
   const handleSubmitResponse = async (e) => {
     e.preventDefault();
@@ -182,7 +193,7 @@ function Details() {
     }
   };
 
-   //////////////////////////////////////* Gestion de l'envoi du commentaire */////////////////////////////////////////
+   //////////////////////////////////////* Gestion de l'envoi du commentaire d'un membre */////////////////////////////////////////
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -220,11 +231,13 @@ function Details() {
 
   //////////////////////////////////////* Gestion de la suppression du lieu par le gérant */////////////////////////////////////////
 
+  // lors du clique sur le bouton supprimer ouverture de la pop-up de confirmation
   const handleSubmitDestroy = async (e) => {
     e.preventDefault();
     setShowConfirmAlert(true);
   };
 
+  // dans la pop-op si "confirmer" est cliqué -> déclenchement de la fonction destroy et redirection vers l'accueil
   const handleConfirmDestroy = async (e) => {
     e.preventDefault();
     try {
@@ -250,6 +263,7 @@ function Details() {
     }
   };
 
+  // dans la pop-up si "annuler" est cliqué ou si clique dans le vide -> fermeture de la pop-up, pas de lancement de la fonction destroy
   const handleCancelDestroy = () => {
     setShowConfirmAlert(false);
   };
@@ -261,6 +275,7 @@ function Details() {
         <div className="parentDetails">
           <div className="details">
             <Container component="main" maxWidth="md">
+                                          {/* Si showAlert === "true" alors on affiche le message */}
                 {showAlert && (
                 <Alert severity="success">
                   Lieu supprimé avec succès. Redirection vers la page d'accueil.
@@ -300,6 +315,7 @@ function Details() {
                   </Box> ) : "Non spécifié"}
                   </p>
                   <p className="description">{details.description}</p>
+                            {/* Vérification de l'identité du gérant pour lui permettre de suppr et modif le lieu */}
                   {userId.id === details.owner_id  && isOwner === "true" ? (
                     <div className="destroy">
                     <form onSubmit={handleSubmitDestroy}>
@@ -319,6 +335,7 @@ function Details() {
                     />
                     </div>
                   ) : "" }
+                                                {/* Vérification si l'utilisateur est bien un membre */}
                 {isOwner === "false" ? (
                 <form onSubmit={handleSubmit}>
                   <div className="formNotice">
@@ -396,6 +413,7 @@ function Details() {
                       </div>
                   ))}
               </div>
+                                {/* Vérification de l'identité du gérant pour lui permettre de répondre à un commentaire */}
               {userId.id === details.owner_id  && isOwner === "true" ? (
                 <form onSubmit={handleSubmitResponse}>
                   <div className="formNotice">

@@ -21,6 +21,7 @@ const navigateToHome = () => {
   window.location.href = "/";
 };
 
+// petite ligne "footer" copyright de la page login
 function Copyright(props) {
   return (
     <Typography
@@ -51,6 +52,8 @@ function Login() {
     navigate("/");
   };
 
+   //////////////////////////////////////* Gestion de l'envoi du formulaire de connexion */////////////////////////////////////////
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
@@ -67,7 +70,7 @@ function Login() {
 
         setTimeout(() => {
           navigateToHome();
-        }, 1000);
+        }, 1500);
       } else {
         console.error("Erreur lors de la connexion");
       }
@@ -83,6 +86,7 @@ function Login() {
   const handleInputChange = (event) => {
     setFormData({
       ...formData,
+       // insertion de la valeur de l'input dans la colonne correspondante au name de cet input (ex: lastname, firstname, etc...)
       [event.target.name]: event.target.value,
     });
   };

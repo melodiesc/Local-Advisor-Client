@@ -24,6 +24,9 @@ export default function EditProfil() {
   } else {
     userType = "user";
   }
+
+   //////////////////////////////////////* Récupération des informations de l'utilisateur en fonction de son type *//////////////////////////////////
+
   useEffect(() => {
     const fetchProfileData = async () => {
       try {
@@ -51,9 +54,12 @@ export default function EditProfil() {
   }, []);
 
   const handleChange = (e) => {
+    // insertion de la valeur de l'input dans la colonne correspondante au name de cet input (ex: lastname, firstname, etc...)
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  //////////////////////////////////////* Gestion de l'envoi des modifications du profil *//////////////////////////////////
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -21,3 +21,5 @@ const ConfirmAlert = ({ open, onClose, onConfirm, title, content }) => {
 };
 
 export default ConfirmAlert;
+
+//////////////////////////////////////* Gestion de la pop-up alert pour suppression d'un lieu */////////////////////////////////////////

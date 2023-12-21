@@ -122,8 +122,12 @@ function CreateCard() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    // Mise à jour de l'état du formulaire 
+    // prevState conserve les anciennes valeurs de l'objet
     setFormData((prevState) => ({
+      //...prevState copie les nouvelles valeur de l'objet tout en conservant les anciennes
       ...prevState,
+      // on assigne à name la valeur de value
       [name]: value,
     }));
   };
@@ -162,8 +166,7 @@ function CreateCard() {
                   onChange={handleChange}
                 />
               </Grid>
-              {/* Autres champs de formulaire */}
-              <Grid item xs={12}>
+              <Grid item xs={6}>
                 <TextField
                   required
                   fullWidth

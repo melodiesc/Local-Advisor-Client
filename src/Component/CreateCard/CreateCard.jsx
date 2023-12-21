@@ -32,6 +32,8 @@ function CreateCard({}) {
   });
   const [imagePreview, setImagePreview] = useState(null);
 
+  //////////////////////////////////////* Récupération des informations du gérant */////////////////////////////////////////
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -49,10 +51,14 @@ function CreateCard({}) {
 
         if (response.ok) {
           const data = await response.json();
-          setOwnerId(data.id); // Assurez-vous que data contient l'ID du propriétaire
+          setOwnerId(data.id);
+          // Mise à jour de l'état du formulaire 
+          // prevState conserve les anciennes valeurs de l'objet
           setFormData((prevState) => ({
+          //...prevState copie les nouvelles valeur de l'objet tout en conservant les anciennes
             ...prevState,
-            owner_id: data.id, // Mettez à jour owner_id dans formData avec l'ID du propriétaire
+          // on assigne à owner_id la valeur de id obtenue dans la variable data
+            owner_id: data.id,
           }));
         } else {
           console.error("Error fetching profile data");
@@ -65,6 +71,7 @@ function CreateCard({}) {
     fetchData();
   }, []);
 
+  // insertions des données de l'image dans formData, et récupération des données de l'image pour la preview
   const handleChange = (e) => {
     const { name, value, files } = e.target;
     setFormData((prevState) => ({
@@ -81,11 +88,15 @@ function CreateCard({}) {
     }
   };
 
+   //////////////////////////////////////* Gestion de l'envoi du formulaire de création du lieu  */////////////////////////////////////////
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    // création du nouvel objet FormData
     const data = new FormData();
+    // récupère un tableau contenant les clés de l'objet FormData
     Object.keys(formData).forEach((key) => {
+      // pour chaque clé -> la clé et la valeur de l'objet sont ajoutés à data
       data.append(key, formData[key]);
     });
 
@@ -152,7 +163,7 @@ function CreateCard({}) {
                 required
                 fullWidth
                 id="address"
-                label="Rue"
+                label="Adresse"
                 name="address"
                 autoComplete="address"
                 onChange={handleChange}
@@ -210,6 +221,7 @@ function CreateCard({}) {
                 onChange={handleChange}
               />
             </Grid>
+                                                                {/* Ajout de la photo */}
             <Grid item xs={12}>
               <InputLabel htmlFor="image_path">Photo du Lieu</InputLabel>
               <Input
@@ -217,7 +229,8 @@ function CreateCard({}) {
                 name="image_path"
                 type="file"
                 onChange={handleChange}
-              />
+              /><br></br><br></br>
+              <p>Attention le poids de la photo ne doit pas dépasser les 2Mo.</p>
               {imagePreview && (
                 <CardMedia
                   component="img"

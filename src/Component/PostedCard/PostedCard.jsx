@@ -8,6 +8,8 @@ const LocationList = () => {
     const navigate = useNavigate(); 
     const apiUrl = import.meta.env.VITE_API_URL;
     
+    //////////////////////////////////////* Récupération des données des lieux dans la table locations *//////////////////////////////////
+    
     useEffect(() => {
         const fetchData = async () => {
             try {

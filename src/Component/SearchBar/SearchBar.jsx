@@ -13,58 +13,73 @@ export default function SearchBar() {
     setSearchText(event.target.value);
   };
 
-  let handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-  let BASE_URL = `${apiUrl}/api/categories/`;
+  // Fonction appelée lorsqu'une option est sélectionnée dans l'interface utilisateur
+let handleOptionChange = (event) => {
+  setSelectedOption(event.target.value);
+};
 
-  let performAction = async () => {
-    if (selectedOption === 'all' && searchText.trim() === '') {
-      setResponseData([]);
-      return;
-    }
-      switch (selectedOption) {
-        case 'all':
-          makeRequest(0);
-          break;
-        case 'hotel':
-          makeRequest(1);
-          break;
-        case 'bar':
-          makeRequest(2);
-          break;
-        case 'restaurant':
-          makeRequest(3);
-          break;
-      }
-    }
-  
-  let makeRequest = async (categoryId) => {
-       let url = BASE_URL + (categoryId === 0 ? 'all' : categoryId);
-    try {
-      let response = await axios.post(url, {
-        category_id: categoryId,
-        searchText: searchText,
-      });
-      console.log(response.data);
-      setResponseData(response.data);
-    } catch (error) {
-      console.error(`Erreur lors de la requête ${url}`, error);
-    }
-  };
+// URL de base pour les requêtes API
+let BASE_URL = `${apiUrl}/api/categories/`;
 
-  let getSearchPlaceholder = () => {
-    switch (selectedOption) {
-      case 'hotel':
-        return "Quel hôtel souhaitez-vous trouver?";
-      case 'bar':
-        return "Dans quel bar souhaitez-vous vous rendre?";
-      case 'restaurant':
-        return "Quel restaurant recherchez-vous?";
-      case 'all' :
-        return "Rechercher";
-    }
-  };
+// Fonction principale effectuant l'action en fonction de l'option sélectionnée
+let performAction = async () => {
+  // Vérifie si l'option sélectionnée est 'all' et si le champ de recherche est vide
+  if (selectedOption === 'all' && searchText.trim() === '') {
+    setResponseData([]);
+    return;
+  }
+
+  // Affectation d'une valeur string à selectedOption pour l'équivalence INT dans categoryId qui passe en paramètre pour la fonction makeRequest
+  switch (selectedOption) {
+    case 'all':
+      makeRequest(0);
+      break;
+    case 'hotel':
+      makeRequest(1);
+      break;
+    case 'bar':
+      makeRequest(2);
+      break;
+    case 'restaurant':
+      makeRequest(3);
+      break;
+  }
+};
+
+// Fonction effectuant une requête API en fonction de la catégorie sélectionnée
+let makeRequest = async (categoryId) => {
+  // Construction de l'URL complète en fonction de la catégorie sélectionnée
+  let url = BASE_URL + (categoryId === 0 ? 'all' : categoryId);
+
+  try {
+    // Envoi d'une requête POST avec la catégorie et le texte de recherche
+    let response = await axios.post(url, {
+      category_id: categoryId,
+      searchText: searchText,
+    });
+
+    // Affichage des données de réponse dans la console et mise à jour de l'état
+    console.log(response.data);
+    setResponseData(response.data);
+  } catch (error) {
+    // Gestion des erreurs en cas d'échec de la requête
+    console.error(`Erreur lors de la requête ${url}`, error);
+  }
+};
+
+// Fonction renvoyant le texte de l'attribut placeholder en fonction de l'option sélectionnée
+let getSearchPlaceholder = () => {
+  switch (selectedOption) {
+    case 'hotel':
+      return "Quel hôtel souhaitez-vous trouver?";
+    case 'bar':
+      return "Dans quel bar souhaitez-vous vous rendre?";
+    case 'restaurant':
+      return "Quel restaurant recherchez-vous?";
+    case 'all' :
+      return "Rechercher";
+  }
+};
 
   return (
     <div>

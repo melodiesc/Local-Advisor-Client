@@ -56,6 +56,8 @@ function Register() {
     navigate("/login");
   };
 
+  //////////////////////////////////////* Gestion de l'envoie du formulaire d'enregistrement *//////////////////////////////////
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);

@@ -19,6 +19,8 @@ export default function RenderProfil() {
     navigate("/editprofil");
   };
 
+  //////////////////////////////////////* Récupération des informations de l'utilisateur en fonction de son type *//////////////////////////////////
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

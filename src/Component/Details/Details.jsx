@@ -25,6 +25,8 @@ function Details() {
   const [isLoading, setIsLoading] = useState(true);
   const [userId, setUserId] = useState(0);
   const [showAlert, setShowAlert] = useState(false);
+  const [showAlertResponse, setShowAlertResponse] = useState(false);
+  const [showAlertDestroy, setShowAlertDestroy] = useState(false);
   const [notices, setNotices] = useState([]);
   const [responses, setResponses] = useState([]);
   const [content, setContent] = useState([]);
@@ -181,7 +183,7 @@ function Details() {
   
       if (response.ok) {
         console.log('Réponse postée avec succès.');
-        setShowAlert(true);
+        setShowAlertResponse(true);
           setTimeout(() => {
             window.location.reload();
           }, 2000);
@@ -251,7 +253,7 @@ function Details() {
         if (response.ok) {
             console.log('Lieu supprimé avec succès');
             setShowConfirmAlert(false);
-            setShowAlert(true);
+            setShowAlertDestroy(true);
             setTimeout(() => {
               navigateToHome();
             }, 1500);
@@ -276,7 +278,7 @@ function Details() {
           <div className="details">
             <Container component="main" maxWidth="md">
                                           {/* Si showAlert === "true" alors on affiche le message */}
-                {showAlert && (
+                {showAlertDestroy &&  (
                 <Alert severity="success">
                   Lieu supprimé avec succès. Redirection vers la page d'accueil.
                 </Alert>
@@ -439,7 +441,7 @@ function Details() {
                     <Stack spacing={2} direction="row">
                       <Button type='submit' variant="contained"><IonIcon className="icon-filter-search" icon={send} /></Button>
                     </Stack>
-                    {showAlert && (
+                    {showAlertResponse && (
                     <Alert severity="success">
                       Réponse postée avec succès.
                     </Alert>

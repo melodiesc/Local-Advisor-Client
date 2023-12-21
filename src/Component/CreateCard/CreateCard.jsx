@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import NavBar from '../NavBar/NavBar';
+import "./CreateCard.css";
 import {
   Box,
   Button,
@@ -241,10 +242,11 @@ function CreateCard({}) {
             </Grid>
           </Grid>
           <Button
+            className="create-btn"
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            sx={{ mt: 3, mb: 2, }}
           >
             Créer
           </Button>
